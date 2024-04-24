@@ -42,12 +42,10 @@ mesh = SubResource("CapsuleMesh_q3c5o")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.677053)
 mesh = SubResource("BoxMesh_0la74")
 
-[node name="ActionSelection" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "TargetVehicle", "steering", "perception")]
+[node name="ActionSelection" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "TargetVehicle")]
 script = ExtResource("2_a23r0")
 Vehicle = NodePath("..")
 TargetVehicle = NodePath("..")
-steering = NodePath("../Steering")
-perception = NodePath("../Perception")
 
 [node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "ActionSelection")]
 script = ExtResource("3_f3nxa")

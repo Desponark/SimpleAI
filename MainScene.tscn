@@ -83,4 +83,4 @@ transform = Transform3D(0.999981, 0.00492729, -0.00368549, 0, 0.598961, 0.800778
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Enemy" parent="." instance=ExtResource("2_pcomq")]
-transform = Transform3D(-0.999664, 0, 0.0259327, 0, 1, 0, -0.0259327, 0, -0.999664, 1.57643, 2.22705, -27.4388)
+transform = Transform3D(-0.999664, 0, 0.0259327, 0, 1, 0, -0.0259327, 0, -0.999664, 1.57643, 2.22705, -42.2856)

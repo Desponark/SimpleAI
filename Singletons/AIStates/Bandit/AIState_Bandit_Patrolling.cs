@@ -30,7 +30,7 @@ public partial class AIState_Bandit_Patrolling : State<Cognition>
 		var player = perception.Bodies.Find(x => x.IsInGroup("Player"));
 		if (player != null)
 		{
-			entity.StateMachine.ChangeState(Chasing.Instance);
+			entity.StateMachine.ChangeState(AIState_Bandit_Chasing.Instance);
 		}
 	}
 

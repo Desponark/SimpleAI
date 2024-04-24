@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics;
 
-public partial class Chasing : State<Cognition>
+public partial class AIState_Bandit_Chasing : State<Cognition>
 {
-	private static readonly Lazy<Chasing> lazy = new(() => new Chasing());
-	public static Chasing Instance { get { return lazy.Value; }}
+	private static readonly Lazy<AIState_Bandit_Chasing> lazy = new(() => new AIState_Bandit_Chasing());
+	public static AIState_Bandit_Chasing Instance { get { return lazy.Value; }}
 
 	
 	public override void Enter(Cognition entity)

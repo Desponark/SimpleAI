@@ -12,12 +12,15 @@ public partial class Cognition : Node
 
 	public StateMachine<Cognition> StateMachine;
 
+	[Export]
+	public InitialState InitialState;
+
 	public override void _Ready()
 	{
 		StateMachine = new StateMachine<Cognition>(this);
 		StateMachine.SetCurrentState(TestState.Instance);
 
-		StateMachine.ChangeState(AIState_Bandit_Patrolling.Instance);
+		StateMachine.ChangeState(InitialState.GetInstance());
 	}
 
 	public override void _Process(double delta)

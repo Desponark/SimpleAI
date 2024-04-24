@@ -1,15 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://3fcbvh70nxt7"]
+[gd_scene load_steps=19 format=3 uid="uid://3fcbvh70nxt7"]
 
-[ext_resource type="Script" path="res://Scripts/Vehicle.cs" id="1_0k2q1"]
-[ext_resource type="Script" path="res://Scripts/ActionSelection/ActionSelection.cs" id="2_dswqx"]
-[ext_resource type="Script" path="res://Scripts/Cognition/Cognition.cs" id="2_va3bh"]
-[ext_resource type="Script" path="res://Scripts/Steering/Steering.cs" id="3_0ls1w"]
-[ext_resource type="Script" path="res://Scripts/Steering/SteeringBehaviour/Behaviours/Seek.cs" id="4_doy4u"]
-[ext_resource type="Script" path="res://Scripts/Steering/SteeringBehaviour/Behaviours/Wander.cs" id="5_64d2p"]
-[ext_resource type="Script" path="res://Scripts/Steering/SteeringBehaviour/Behaviours/FollowPath.cs" id="6_f37tc"]
-[ext_resource type="Script" path="res://Scripts/Steering/SteeringBehaviour/Behaviours/Flee.cs" id="7_pq7io"]
-[ext_resource type="Script" path="res://Scripts/Steering/SteeringBehaviour/Behaviours/Pursuit.cs" id="8_ysd8t"]
-[ext_resource type="Script" path="res://Scripts/Perception/Perception.cs" id="9_u0vkh"]
+[ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_adjla"]
+[ext_resource type="Script" path="res://Nodes/ActionSelection.cs" id="2_kg8fx"]
+[ext_resource type="Script" path="res://Nodes/Steering.cs" id="3_1fcps"]
+[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Seek.cs" id="4_xoage"]
+[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Flee.cs" id="5_6mx2x"]
+[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Pursuit.cs" id="6_svvfi"]
+[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Wander.cs" id="7_oowdj"]
+[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/FollowPath.cs" id="8_05fwe"]
+[ext_resource type="Script" path="res://Nodes/Cognition.cs" id="9_fvdo4"]
+[ext_resource type="Script" path="res://Resources/AI/InitialStates/Bandit/InitialState_Bandit.cs" id="10_oi387"]
+[ext_resource type="Script" path="res://Nodes/Perception.cs" id="11_6370g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n7ev1"]
 
@@ -26,11 +27,14 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_ygt0v")
 size = Vector3(0.2, 0.2, 0.5)
 
+[sub_resource type="Resource" id="Resource_gggs3"]
+script = ExtResource("10_oi387")
+
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ee105"]
 points = PackedVector3Array(0, 0, 0, 0, 2, 0, 0, 0, -30, -15, 0, -2, 15, 0, -2, -10, 0, -20, 10, 0, -20, -20, 0, -6, 20, 0, -6)
 
-[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
-script = ExtResource("1_0k2q1")
+[node name="Bandit" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
+script = ExtResource("1_adjla")
 Steering = NodePath("Steering")
 MaxSpeed = 4
 
@@ -44,42 +48,43 @@ mesh = SubResource("CapsuleMesh_ee7g1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.677053)
 mesh = SubResource("BoxMesh_0la74")
 
+[node name="ActionSelection" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "TargetVehicle")]
+script = ExtResource("2_kg8fx")
+Vehicle = NodePath("..")
+TargetVehicle = NodePath("..")
+
 [node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "ActionSelection")]
-script = ExtResource("3_0ls1w")
+script = ExtResource("3_1fcps")
 Vehicle = NodePath("..")
 ActionSelection = NodePath("../ActionSelection")
 
 [node name="Seek" type="Node" parent="Steering"]
-script = ExtResource("4_doy4u")
+script = ExtResource("4_xoage")
 active = false
 
 [node name="Flee" type="Node" parent="Steering"]
-script = ExtResource("7_pq7io")
+script = ExtResource("5_6mx2x")
 active = false
 
 [node name="Pursuit" type="Node" parent="Steering"]
-script = ExtResource("8_ysd8t")
+script = ExtResource("6_svvfi")
 active = false
 
 [node name="Wander" type="Node" parent="Steering"]
-script = ExtResource("5_64d2p")
+script = ExtResource("7_oowdj")
 active = false
 
 [node name="FollowPath" type="Node" parent="Steering"]
-script = ExtResource("6_f37tc")
+script = ExtResource("8_05fwe")
 active = false
 
 [node name="Cognition" type="Node" parent="." node_paths=PackedStringArray("Root")]
-script = ExtResource("2_va3bh")
+script = ExtResource("9_fvdo4")
 Root = NodePath("..")
-
-[node name="ActionSelection" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "TargetVehicle")]
-script = ExtResource("2_dswqx")
-Vehicle = NodePath("..")
-TargetVehicle = NodePath("..")
+InitialState = SubResource("Resource_gggs3")
 
 [node name="Perception" type="Node3D" parent="." node_paths=PackedStringArray("Area3D")]
-script = ExtResource("9_u0vkh")
+script = ExtResource("11_6370g")
 Area3D = NodePath("Area3D")
 
 [node name="Area3D" type="Area3D" parent="Perception"]

@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Godot;
 
-public partial class StateMachine<T> : Node
+public class StateMachine<T>
 {
 	private T owner;
 	private State<T> currentState;

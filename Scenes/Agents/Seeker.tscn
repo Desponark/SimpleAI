@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=3 uid="uid://bbtkp72y38dc0"]
 
-[ext_resource type="Script" path="res://Scripts/Vehicle.cs" id="1_dkqlj"]
-[ext_resource type="Script" path="res://Scripts/ActionSelection/ActionSelection.cs" id="2_a23r0"]
-[ext_resource type="Script" path="res://Scripts/Steering/Steering.cs" id="3_f3nxa"]
-[ext_resource type="Script" path="res://Scripts/Steering/SteeringBehaviour/Behaviours/Seek.cs" id="4_6jd4s"]
-[ext_resource type="Script" path="res://Scripts/Steering/SteeringBehaviour/Behaviours/Arrive.cs" id="5_7d2fj"]
-[ext_resource type="Script" path="res://Scripts/Perception/Perception.cs" id="6_pk0wf"]
+[ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_6s8kd"]
+[ext_resource type="Script" path="res://Nodes/ActionSelection.cs" id="2_ab6k2"]
+[ext_resource type="Script" path="res://Nodes/Steering.cs" id="3_njhd0"]
+[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Seek.cs" id="4_6jd4s"]
+[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Arrive.cs" id="5_7d2fj"]
+[ext_resource type="Script" path="res://Nodes/Perception.cs" id="6_pk0wf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n7ev1"]
 
@@ -29,7 +29,7 @@ size = Vector3(0.2, 0.2, 0.5)
 [sub_resource type="SphereShape3D" id="SphereShape3D_mk4iv"]
 
 [node name="Seeker" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
-script = ExtResource("1_dkqlj")
+script = ExtResource("1_6s8kd")
 Steering = NodePath("Steering")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -43,12 +43,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.677053)
 mesh = SubResource("BoxMesh_0la74")
 
 [node name="ActionSelection" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "TargetVehicle")]
-script = ExtResource("2_a23r0")
+script = ExtResource("2_ab6k2")
 Vehicle = NodePath("..")
 TargetVehicle = NodePath("..")
 
 [node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "ActionSelection")]
-script = ExtResource("3_f3nxa")
+script = ExtResource("3_njhd0")
 Vehicle = NodePath("..")
 ActionSelection = NodePath("../ActionSelection")
 

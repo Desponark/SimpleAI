@@ -1,22 +1,18 @@
+using System.Linq;
 using Godot;
 
 
 /// <summary>
-/// Provides some control/decision logic so different steering behaviours can be tested.
-/// Implementation not final and just for easy testing right now.
+/// 
 /// </summary>
 [GlobalClass]
-public partial class ActionSelection : Node
+public partial class MouseInput : Node
 {
 	[Export]
 	public Vehicle Vehicle;
 
 	[Export]
 	public Vector3 TargetPos;
-
-	[Export]
-	public Vehicle TargetVehicle;
-
 
 	public override void _Input(InputEvent @event)
 	{

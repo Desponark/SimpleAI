@@ -1,13 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://3fcbvh70nxt7"]
+[gd_scene load_steps=13 format=3 uid="uid://3fcbvh70nxt7"]
 
 [ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_adjla"]
-[ext_resource type="Script" path="res://Nodes/ActionSelection.cs" id="2_kg8fx"]
 [ext_resource type="Script" path="res://Nodes/Steering.cs" id="3_1fcps"]
-[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Seek.cs" id="4_xoage"]
-[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Flee.cs" id="5_6mx2x"]
-[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Pursuit.cs" id="6_svvfi"]
-[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/Wander.cs" id="7_oowdj"]
-[ext_resource type="Script" path="res://Singletons/SteeringBehaviours/Behaviours/FollowPath.cs" id="8_05fwe"]
 [ext_resource type="Script" path="res://Nodes/Cognition.cs" id="9_fvdo4"]
 [ext_resource type="Script" path="res://Resources/AI/InitialStates/Bandit/InitialState_Bandit.cs" id="10_oi387"]
 [ext_resource type="Script" path="res://Nodes/Perception.cs" id="11_6370g"]
@@ -27,11 +21,11 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_ygt0v")
 size = Vector3(0.2, 0.2, 0.5)
 
-[sub_resource type="Resource" id="Resource_gggs3"]
+[sub_resource type="Resource" id="Resource_g52gq"]
 script = ExtResource("10_oi387")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ee105"]
-points = PackedVector3Array(0, 0, 0, 0, 2, 0, 0, 0, -30, -15, 0, -2, 15, 0, -2, -10, 0, -20, 10, 0, -20, -20, 0, -6, 20, 0, -6)
+points = PackedVector3Array(0, 0, 0, 0, 2, 0, 0, 0, -22.5, -15, 0, -2, 15, 0, -2, -10, 0, -20, 10, 0, -20, -20, 0, -6, 20, 0, -6)
 
 [node name="Bandit" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
 script = ExtResource("1_adjla")
@@ -48,40 +42,14 @@ mesh = SubResource("CapsuleMesh_ee7g1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.677053)
 mesh = SubResource("BoxMesh_0la74")
 
-[node name="ActionSelection" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "TargetVehicle")]
-script = ExtResource("2_kg8fx")
-Vehicle = NodePath("..")
-TargetVehicle = NodePath("..")
-
-[node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle", "ActionSelection")]
-script = ExtResource("3_1fcps")
-Vehicle = NodePath("..")
-ActionSelection = NodePath("../ActionSelection")
-
-[node name="Seek" type="Node" parent="Steering"]
-script = ExtResource("4_xoage")
-active = false
-
-[node name="Flee" type="Node" parent="Steering"]
-script = ExtResource("5_6mx2x")
-active = false
-
-[node name="Pursuit" type="Node" parent="Steering"]
-script = ExtResource("6_svvfi")
-active = false
-
-[node name="Wander" type="Node" parent="Steering"]
-script = ExtResource("7_oowdj")
-active = false
-
-[node name="FollowPath" type="Node" parent="Steering"]
-script = ExtResource("8_05fwe")
-active = false
-
 [node name="Cognition" type="Node" parent="." node_paths=PackedStringArray("Root")]
 script = ExtResource("9_fvdo4")
 Root = NodePath("..")
-InitialState = SubResource("Resource_gggs3")
+InitialState = SubResource("Resource_g52gq")
+
+[node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
+script = ExtResource("3_1fcps")
+Vehicle = NodePath("..")
 
 [node name="Perception" type="Node3D" parent="." node_paths=PackedStringArray("Area3D")]
 script = ExtResource("11_6370g")

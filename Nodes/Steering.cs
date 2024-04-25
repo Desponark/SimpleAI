@@ -10,28 +10,14 @@ public partial class Steering : Node
 
 	[Export]
 	public Vehicle Vehicle;
-	
-	[Export]
-	public ActionSelection ActionSelection;
 
 	[Export]
 	public double MaxSteeringForce = 100;
 
-	public Vector3 SteeringForce{get; private set;}
+	public Vector3 SteeringForce { get; private set; }
 
 	private List<SteeringBehaviour> behaviours = new List<SteeringBehaviour>();
 	public List<SteeringBehaviour> Behaviours { get { return behaviours; } }
-
-	public override void _Ready()
-	{
-		foreach (var child in GetChildren())
-		{
-			if (child is SteeringBehaviour)
-			{
-				behaviours.Add(child as SteeringBehaviour);
-			}
-		}
-	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -44,9 +30,9 @@ public partial class Steering : Node
 
 		foreach (var behaviour in behaviours)
 		{
-			if (behaviour.active)
+			if (behaviour.Active)
 			{
-				if (!AccumulateForce(behaviour.Calculate(Vehicle, ActionSelection, delta) * behaviour.weight))
+				if (!AccumulateForce(behaviour.Calculate(Vehicle, delta) * behaviour.Weight))
 				{
 					return;
 				}
@@ -57,7 +43,7 @@ public partial class Steering : Node
 	private bool AccumulateForce(Vector3 addedForce)
 	{
 		double remainingMagnitude = MaxSteeringForce - SteeringForce.Length();
-		
+
 		if (remainingMagnitude <= 0)
 		{
 			return false;

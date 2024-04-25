@@ -1,15 +1,11 @@
 using Godot;
-using System;
 
-[GlobalClass]
-public partial class SteeringBehaviour : Node
+public abstract class SteeringBehaviour
 {
-    [Export]
-    public bool active = true;
-    [Export(PropertyHint.Range, "0, 1")]
-    public float weight = 1;
+    public bool Active = true;
+    public float Weight = 1;
 
-    public virtual Vector3 Calculate(Vehicle vehicle, ActionSelection actionSelection, double delta)
+    public virtual Vector3 Calculate(Vehicle vehicle, double delta)
     {
         return Vector3.Zero;
     }

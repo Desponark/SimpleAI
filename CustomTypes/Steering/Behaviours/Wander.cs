@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 
@@ -6,19 +7,21 @@ using Godot;
 /// by projecting a circle in front of it and steering towards
 /// a target position that is constrained to move along the circle perimeter.
 /// </summary>
-[GlobalClass]
-public partial class Wander : SteeringBehaviour
+public class Wander : SteeringBehaviour
 {
-	[Export]
-	public float wanderRadius = 2;
-	[Export]
-	public float wanderDistance = 100;
-	[Export]
-	public float wanderJitter = 1;
-
+	private float wanderRadius = 2;
+	private float wanderDistance = 100;
+	private float wanderJitter = 1;
 	private Vector3 wanderTarget = Vector3.Zero;
+	
+	public Wander(float wanderRadius = 2, float wanderDistance = 100, float wanderJitter = 1)
+	{
+		this.wanderRadius = wanderRadius;
+		this.wanderDistance = wanderDistance;
+		this.wanderJitter = wanderJitter;
+	}
 
-	public override Vector3 Calculate(Vehicle vehicle, ActionSelection actionSelection, double delta)
+	public override Vector3 Calculate(Vehicle vehicle, double delta)
 	{
 		if (wanderTarget == Vector3.Zero) 
 			wanderTarget = new Vector3(vehicle.Position.X, 0, vehicle.Position.Z);

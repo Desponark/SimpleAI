@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://urhw70e5mry2"]
 
-[ext_resource type="PackedScene" uid="uid://bbtkp72y38dc0" path="res://Scenes/Agents/Seeker.tscn" id="1_0aywe"]
+[ext_resource type="PackedScene" uid="uid://bbtkp72y38dc0" path="res://Scenes/Agents/Player.tscn" id="2_bp81q"]
 [ext_resource type="PackedScene" uid="uid://3fcbvh70nxt7" path="res://Scenes/Agents/Bandit.tscn" id="2_pcomq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xnmme"]
@@ -79,8 +79,8 @@ omni_range = 50.0
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.999981, 0.00492729, -0.00368549, 0, 0.598961, 0.800778, 0.00615313, -0.800763, 0.59895, 2.2624, 32.0113, 19.5972)
 
-[node name="Seeker" parent="." groups=["Player"] instance=ExtResource("1_0aywe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-
 [node name="Bandit" parent="." instance=ExtResource("2_pcomq")]
 transform = Transform3D(-0.996211, 0, -0.0869644, 0, 1, 0, 0.0869644, 0, -0.996211, 0, 4.01756, -38.5358)
+
+[node name="Player" parent="." instance=ExtResource("2_bp81q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6167, 0)

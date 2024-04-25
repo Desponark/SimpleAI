@@ -5,15 +5,20 @@ using System;
 /// <summary>
 /// Returns a steering force that decelerates an agent onto a target position
 /// </summary>
-[GlobalClass]
-public partial class Arrive : SteeringBehaviour
+public class Arrive : SteeringBehaviour
 {
-	[Export]
-	public float Deceleration = 1;
+	private float deceleration = 1;
+	private Vector3 targetPos = Vector3.Zero;
 
-	public override Vector3 Calculate(Vehicle vehicle, ActionSelection actionSelection, double delta)
+	public Arrive(Vector3 targetPos, float deceleration = 1)
 	{
-		return Calc(vehicle, actionSelection.TargetPos, Deceleration);
+		this.targetPos = targetPos;
+		this.deceleration = deceleration;
+	}
+
+	public override Vector3 Calculate(Vehicle vehicle, double delta)
+	{
+		return Calc(vehicle, targetPos, deceleration);
 	}
 
 	public static Vector3 Calc(Vehicle vehicle, Vector3 targetPos, float deceleration)

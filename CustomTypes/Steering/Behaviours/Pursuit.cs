@@ -1,18 +1,21 @@
+using System;
 using Godot;
 
 
 /// <summary>
 /// Returns a steering force that steers towards the predicted position of an agent
 /// </summary>
-[GlobalClass]
-public partial class Pursuit : SteeringBehaviour
+public class Pursuit : SteeringBehaviour
 {
 	private Vehicle evader;
 
-	public override Vector3 Calculate(Vehicle vehicle, ActionSelection actionSelection, double delta)
+	public Pursuit(Vehicle targetVehicle)
 	{
-		evader = actionSelection.TargetVehicle;
+		evader = targetVehicle;
+	}
 
+	public override Vector3 Calculate(Vehicle vehicle, double delta)
+	{
 		if (IsEvaderAheadAndFacingPursuer(vehicle))
 			return Seek.Calc(vehicle.Position, evader.Position, vehicle.MaxSpeed);
 

@@ -18,7 +18,7 @@ public partial class Cognition : Node
 	public override void _Ready()
 	{
 		StateMachine = new StateMachine<Cognition>(this);
-
+		StateMachine.SetCurrentState(AIState_Empty.Instance);
 		StateMachine.ChangeState(InitialState.GetInstance());
 	}
 

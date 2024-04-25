@@ -1,0 +1,56 @@
+[gd_scene load_steps=12 format=3 uid="uid://bbtkp72y38dc0"]
+
+[ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_6s8kd"]
+[ext_resource type="Script" path="res://Nodes/Steering.cs" id="3_njhd0"]
+[ext_resource type="Script" path="res://Nodes/MouseInput.cs" id="4_h1kh5"]
+[ext_resource type="Script" path="res://Nodes/Cognition.cs" id="4_m0lqe"]
+[ext_resource type="Script" path="res://Resources/AI/InitialStates/Player/InitialState_Player.cs" id="5_o625q"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n7ev1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2q1k"]
+albedo_color = Color(0, 1, 0, 1)
+metallic = 1.0
+metallic_specular = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_q3c5o"]
+material = SubResource("StandardMaterial3D_b2q1k")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4g6eb"]
+albedo_color = Color(0, 1, 0, 1)
+metallic = 1.0
+metallic_specular = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_0la74"]
+material = SubResource("StandardMaterial3D_4g6eb")
+size = Vector3(0.2, 0.2, 0.5)
+
+[sub_resource type="Resource" id="Resource_0wkvo"]
+script = ExtResource("5_o625q")
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Steering") groups=["Player"]]
+script = ExtResource("1_6s8kd")
+Steering = NodePath("Steering")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_n7ev1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_q3c5o")
+
+[node name="Nose" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.677053)
+mesh = SubResource("BoxMesh_0la74")
+
+[node name="Cognition" type="Node" parent="." node_paths=PackedStringArray("Root")]
+script = ExtResource("4_m0lqe")
+Root = NodePath("..")
+InitialState = SubResource("Resource_0wkvo")
+
+[node name="MouseInput" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
+script = ExtResource("4_h1kh5")
+Vehicle = NodePath("..")
+
+[node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
+script = ExtResource("3_njhd0")
+Vehicle = NodePath("..")

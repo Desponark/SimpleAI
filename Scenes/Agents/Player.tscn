@@ -29,6 +29,7 @@ size = Vector3(0.2, 0.2, 0.5)
 script = ExtResource("5_o625q")
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Steering") groups=["Player"]]
+collision_layer = 49
 script = ExtResource("1_6s8kd")
 Steering = NodePath("Steering")
 
@@ -47,10 +48,10 @@ script = ExtResource("4_m0lqe")
 Root = NodePath("..")
 InitialState = SubResource("Resource_0wkvo")
 
-[node name="MouseInput" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
-script = ExtResource("4_h1kh5")
-Vehicle = NodePath("..")
-
 [node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
 script = ExtResource("3_njhd0")
+Vehicle = NodePath("..")
+
+[node name="MouseInput" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
+script = ExtResource("4_h1kh5")
 Vehicle = NodePath("..")

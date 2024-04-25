@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://3fcbvh70nxt7"]
+[gd_scene load_steps=14 format=3 uid="uid://3fcbvh70nxt7"]
 
 [ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_adjla"]
 [ext_resource type="Script" path="res://Nodes/Steering.cs" id="3_1fcps"]
+[ext_resource type="Script" path="res://Nodes/GameplayStats.cs" id="5_pj7gf"]
 [ext_resource type="Script" path="res://Nodes/Cognition.cs" id="9_fvdo4"]
 [ext_resource type="Script" path="res://Resources/AI/InitialStates/Bandit/InitialState_Bandit.cs" id="10_oi387"]
 [ext_resource type="Script" path="res://Nodes/Perception.cs" id="11_6370g"]
@@ -28,6 +29,7 @@ script = ExtResource("10_oi387")
 points = PackedVector3Array(0, 0, 0, 0, 2, 0, 0, 0, -22.5, -15, 0, -2, 15, 0, -2, -10, 0, -20, 10, 0, -20, -20, 0, -6, 20, 0, -6)
 
 [node name="Bandit" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
+collision_layer = 49
 script = ExtResource("1_adjla")
 Steering = NodePath("Steering")
 MaxSpeed = 4
@@ -47,6 +49,9 @@ script = ExtResource("9_fvdo4")
 Root = NodePath("..")
 InitialState = SubResource("Resource_g52gq")
 
+[node name="GameplayStats" type="Node" parent="."]
+script = ExtResource("5_pj7gf")
+
 [node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
 script = ExtResource("3_1fcps")
 Vehicle = NodePath("..")
@@ -56,6 +61,8 @@ script = ExtResource("11_6370g")
 Area3D = NodePath("Area3D")
 
 [node name="Area3D" type="Area3D" parent="Perception"]
+collision_layer = 0
+collision_mask = 16
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Perception/Area3D"]
 shape = SubResource("ConvexPolygonShape3D_ee105")

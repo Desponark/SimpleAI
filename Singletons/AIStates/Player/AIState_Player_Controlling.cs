@@ -10,9 +10,7 @@ public class AIState_Player_Controlling : State<Cognition>
 	public override void Enter(Cognition entity)
 	{
 		if (entity.Memory.TryGetValue("MouseInput", out var value) == false || value == null)
-		{
 			entity.Memory["MouseInput"] = entity.Root.GetChildren().OfType<MouseInput>().FirstOrDefault();
-		}
 		var mouseInput = (MouseInput)entity.Memory["MouseInput"];
 
 		var seek = new Seek(mouseInput.TargetPos);
@@ -22,9 +20,7 @@ public class AIState_Player_Controlling : State<Cognition>
 	public override void Execute(Cognition entity)
 	{
 		if (entity.Memory.TryGetValue("MouseInput", out var value) == false || value == null)
-		{
 			entity.Memory["MouseInput"] = entity.Root.GetChildren().OfType<MouseInput>().FirstOrDefault();
-		}
 		var mouseInput = (MouseInput)entity.Memory["MouseInput"];
 
 		var seek = entity.Steering.Behaviours.OfType<Seek>().FirstOrDefault();

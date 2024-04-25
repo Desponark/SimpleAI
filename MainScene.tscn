@@ -82,5 +82,8 @@ transform = Transform3D(0.999981, 0.00492729, -0.00368549, 0, 0.598961, 0.800778
 [node name="Bandit" parent="." instance=ExtResource("2_pcomq")]
 transform = Transform3D(-0.996211, 0, -0.0869644, 0, 1, 0, 0.0869644, 0, -0.996211, 0, 4.01756, -38.5358)
 
+[node name="Bandit2" parent="." instance=ExtResource("2_pcomq")]
+transform = Transform3D(-0.996195, 0, -0.0871556, 0, 1, 0, 0.0871556, 0, -0.996195, -28, 2, -26)
+
 [node name="Player" parent="." instance=ExtResource("2_bp81q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6167, 0)

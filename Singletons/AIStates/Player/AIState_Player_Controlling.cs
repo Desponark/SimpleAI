@@ -2,31 +2,38 @@ using System;
 using System.Linq;
 
 public class AIState_Player_Controlling : State<Cognition>
-{	
+{
 	private static readonly Lazy<AIState_Player_Controlling> lazy = new(() => new AIState_Player_Controlling());
-	public static AIState_Player_Controlling Instance { get { return lazy.Value; }}
+	public static AIState_Player_Controlling Instance { get { return lazy.Value; } }
 
-	private Steering steering;
-	private MouseInput mouseInput;
-
-	private Seek seek;
 
 	public override void Enter(Cognition entity)
 	{
-		steering = entity.Root.GetChildren().OfType<Steering>().FirstOrDefault();
-		mouseInput = entity.Root.GetChildren().OfType<MouseInput>().FirstOrDefault();
+		if (entity.Memory.TryGetValue("MouseInput", out var value) == false || value == null)
+		{
+			entity.Memory["MouseInput"] = entity.Root.GetChildren().OfType<MouseInput>().FirstOrDefault();
+		}
+		var mouseInput = (MouseInput)entity.Memory["MouseInput"];
 
-		seek = new Seek(mouseInput.TargetPos);
-		steering.Behaviours.Add(seek);
+		var seek = new Seek(mouseInput.TargetPos);
+		entity.Steering.Behaviours.Add(seek);
 	}
 
 	public override void Execute(Cognition entity)
 	{
+		if (entity.Memory.TryGetValue("MouseInput", out var value) == false || value == null)
+		{
+			entity.Memory["MouseInput"] = entity.Root.GetChildren().OfType<MouseInput>().FirstOrDefault();
+		}
+		var mouseInput = (MouseInput)entity.Memory["MouseInput"];
+
+		var seek = entity.Steering.Behaviours.OfType<Seek>().FirstOrDefault();
 		seek.SetTargetPos(mouseInput.TargetPos);
 	}
 
 	public override void Exit(Cognition entity)
 	{
-		steering.Behaviours.Remove(seek);
+		var seek = entity.Steering.Behaviours.OfType<Seek>().FirstOrDefault();
+		entity.Steering.Behaviours.Remove(seek);
 	}
 }

@@ -8,24 +8,17 @@ public class AIState_Bandit_Patrolling : State<Cognition>
 	public static AIState_Bandit_Patrolling Instance { get { return lazy.Value; }}
 
 
-	private Steering steering;
-	private Perception perception;
-	private Wander wander;
-
 	public override void Enter(Cognition entity)
 	{
 		Debug.WriteLine("Enter Patrol");
 		
-		steering = entity.Root.GetChildren().OfType<Steering>().FirstOrDefault();
-		perception = entity.Root.GetChildren().OfType<Perception>().FirstOrDefault();
-
-		wander = new Wander();
-		steering.Behaviours.Add(wander);
+		var wander = new Wander();
+		entity.Steering.Behaviours.Add(wander);
 	}
 
 	public override void Execute(Cognition entity)
-	{		
-		var player = perception.Bodies.Find(x => x.IsInGroup("Player"));
+	{
+		var player = entity.Perception.Bodies.Find(x => x.IsInGroup("Player"));
 		if (player != null)
 		{
 			entity.StateMachine.ChangeState(AIState_Bandit_Chasing.Instance);
@@ -35,7 +28,8 @@ public class AIState_Bandit_Patrolling : State<Cognition>
 	public override void Exit(Cognition entity)
 	{
 		Debug.WriteLine("Exit Patrol");
-		
-		steering.Behaviours.Remove(wander);
+
+		var wander = entity.Steering.Behaviours.OfType<Wander>().FirstOrDefault();
+		entity.Steering.Behaviours.Remove(wander);
 	}
 }

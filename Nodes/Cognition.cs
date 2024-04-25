@@ -1,5 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
-
 
 /// <summary>
 /// Brain
@@ -9,14 +10,22 @@ public partial class Cognition : Node
 {
 	[Export]
 	public Node Root;
-
-	public StateMachine<Cognition> StateMachine;
-
 	[Export]
 	public InitialState InitialState;
+	
+	public Steering Steering;
+	public Perception Perception;
+	public GameplayStats GameplayStats;
+	public StateMachine<Cognition> StateMachine;
+
+	public Dictionary<string, object> Memory = new();
 
 	public override void _Ready()
 	{
+		Steering = Root.GetChildren().OfType<Steering>().FirstOrDefault();
+		Perception = Root.GetChildren().OfType<Perception>().FirstOrDefault();
+		GameplayStats = Root.GetChildren().OfType<GameplayStats>().FirstOrDefault();
+
 		StateMachine = new StateMachine<Cognition>(this);
 		StateMachine.SetCurrentState(AIState_Empty.Instance);
 		StateMachine.ChangeState(InitialState.GetInstance());

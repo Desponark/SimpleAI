@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://urhw70e5mry2"]
+[gd_scene load_steps=16 format=3 uid="uid://urhw70e5mry2"]
 
 [ext_resource type="PackedScene" uid="uid://bbtkp72y38dc0" path="res://Scenes/Agents/Player.tscn" id="2_bp81q"]
 [ext_resource type="PackedScene" uid="uid://3fcbvh70nxt7" path="res://Scenes/Agents/Bandit.tscn" id="2_pcomq"]
+[ext_resource type="PackedScene" uid="uid://57570hbs8oqb" path="res://Scenes/Agents/Deer.tscn" id="3_u31bm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xnmme"]
 size = Vector3(100, 1, 100)
@@ -224,3 +225,6 @@ transform = Transform3D(-0.996211, 0, -0.0869644, 0, 1, 0, 0.0869644, 0, -0.9962
 
 [node name="Player" parent="." instance=ExtResource("2_bp81q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Deer" parent="." instance=ExtResource("3_u31bm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8876, 1.97933, 29.7677)

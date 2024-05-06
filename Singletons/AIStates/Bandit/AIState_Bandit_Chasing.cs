@@ -13,7 +13,7 @@ public class AIState_Bandit_Chasing : State<Cognition>
 	{
 		Debug.WriteLine("Enter Chasing");
 		
-		var player = (Vehicle)entity.Perception.VisibleBodies.Find(x => x.IsInGroup("Player"));
+		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 		
 		var pursuit = new Pursuit(player);
 		entity.Steering.Behaviours.Add(pursuit);

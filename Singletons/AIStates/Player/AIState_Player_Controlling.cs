@@ -17,7 +17,7 @@ public class AIState_Player_Controlling : State<Cognition>
 		entity.Steering.Behaviours.Add(seek);
 	}
 
-	public override void Execute(Cognition entity)
+	public override void Execute(Cognition entity, double delta)
 	{
 		if (entity.Memory.TryGetValue("MouseInput", out var value) == false || value == null)
 			entity.Memory["MouseInput"] = entity.Root.GetChildren().OfType<MouseInput>().FirstOrDefault();

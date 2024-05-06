@@ -12,7 +12,7 @@ public partial class Steering : Node
 	public Vehicle Vehicle;
 
 	[Export]
-	public double MaxSteeringForce = 100;
+	public double MaxSteeringForce = 10;
 
 	public Vector3 SteeringForce { get; private set; }
 

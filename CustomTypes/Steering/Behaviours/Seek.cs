@@ -8,10 +8,16 @@ using Godot;
 public class Seek : SteeringBehaviour
 {
 	private Vector3 targetPos = Vector3.Zero;
+	private Vehicle targetVehicle = null;
 
 	public Seek(Vector3 targetPos)
 	{
 		this.targetPos = targetPos;
+	}
+
+	public Seek(Vehicle targetVehicle)
+	{
+		this.targetVehicle = targetVehicle;
 	}
 
 	public void SetTargetPos(Vector3 targetPos)
@@ -21,7 +27,9 @@ public class Seek : SteeringBehaviour
 
 	public override Vector3 Calculate(Vehicle vehicle, double delta)
 	{
-		return Calc(vehicle.Position, targetPos, vehicle.MaxSpeed);
+		var pos = targetVehicle != null ? targetVehicle.Position : targetPos;
+
+		return Calc(vehicle.Position, pos, vehicle.MaxSpeed);
 	}
 	
 	public static Vector3 Calc(Vector3 from, Vector3 to, float maxSpeed)

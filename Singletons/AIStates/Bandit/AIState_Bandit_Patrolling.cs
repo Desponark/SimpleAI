@@ -16,9 +16,9 @@ public class AIState_Bandit_Patrolling : State<Cognition>
 		entity.Steering.Behaviours.Add(wander);
 	}
 
-	public override void Execute(Cognition entity)
+	public override void Execute(Cognition entity, double delta)
 	{
-		var player = entity.Perception.Bodies.Find(x => x.IsInGroup("Player"));
+		var player = entity.Perception.VisibleBodies.Find(x => x.IsInGroup("Player"));
 		if (player != null)
 		{
 			entity.StateMachine.ChangeState(AIState_Bandit_Chasing.Instance);

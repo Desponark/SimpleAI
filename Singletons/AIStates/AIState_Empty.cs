@@ -9,7 +9,7 @@ public class AIState_Empty : State<Cognition>
 	{
 	}
 
-	public override void Execute(Cognition entity)
+	public override void Execute(Cognition entity, double delta)
 	{
 	}
 

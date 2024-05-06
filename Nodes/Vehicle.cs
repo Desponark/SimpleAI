@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Godot;
 
 
@@ -16,7 +17,8 @@ public partial class Vehicle : CharacterBody3D
 	[Export]
 	public float Deceleration = 1;
 
-	private Vector3 Gravity = new(0, -9.8f, 0);
+	private float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	private Vector3 gravityVector = ProjectSettings.GetSetting("physics/3d/default_gravity_vector").AsVector3();
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -27,8 +29,8 @@ public partial class Vehicle : CharacterBody3D
 			LookAt(Position + new Vector3(Steering.SteeringForce.X, 0, Steering.SteeringForce.Z));
 		}
 
-		Velocity = Steering.SteeringForce;
-		Velocity += Gravity;
+		Velocity = new Vector3(Steering.SteeringForce.X, 0, Steering.SteeringForce.Z);
+		Velocity += gravityVector * gravity;
 		MoveAndSlide();
 	}
 }

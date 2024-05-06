@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Godot;
 
 public class AIState_Bandit_Chasing : State<Cognition>
 {
@@ -12,18 +13,27 @@ public class AIState_Bandit_Chasing : State<Cognition>
 	{
 		Debug.WriteLine("Enter Chasing");
 		
-		var vehicle = (Vehicle)entity.Perception.Bodies.Find(x => x.IsInGroup("Player"));
+		var player = (Vehicle)entity.Perception.VisibleBodies.Find(x => x.IsInGroup("Player"));
 		
-		var pursuit = new Pursuit(vehicle);
+		var pursuit = new Pursuit(player);
 		entity.Steering.Behaviours.Add(pursuit);
 	}
 
-	public override void Execute(Cognition entity)
+	public override void Execute(Cognition entity, double delta)
 	{
-		var player = entity.Perception.Bodies.Find(x => x.IsInGroup("Player"));
+		var player = (Node3D)entity.Memory["lastSeenPlayer"];
+
 		if (player == null)
 		{
 			entity.StateMachine.ChangeState(AIState_Bandit_Patrolling.Instance);
+		}
+		else
+		{
+			var distance = entity.Vehicle.Position.DistanceTo(player.Position);
+			if (distance < 5)
+			{
+				entity.StateMachine.ChangeState(AIState_Bandit_Fighting.Instance);
+			}
 		}
 	}
 

@@ -26,11 +26,11 @@ public class StateMachine<T>
 	public State<T> GlobalState() => globalState;
 	
 
-	public void Update()
+	public void Update(double delta)
 	{
-		if (globalState != null) globalState.Execute(owner);
+		if (globalState != null) globalState.Execute(owner, delta);
 
-		if (currentState != null) currentState.Execute(owner);
+		if (currentState != null) currentState.Execute(owner, delta);
 	}
 
 	public void ChangeState(State<T> newState)

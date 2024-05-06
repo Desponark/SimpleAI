@@ -6,8 +6,7 @@ using Godot;
 /// Provides locomotion for a CharacterBody3D and some needed data so different steering behaviours can be tested.
 /// </summary>
 [GlobalClass]
-public partial class Vehicle : CharacterBody3D
-{
+public partial class Vehicle : CharacterBody3D {
 	[Export]
 	public Steering Steering;
 
@@ -20,12 +19,10 @@ public partial class Vehicle : CharacterBody3D
 	private float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	private Vector3 gravityVector = ProjectSettings.GetSetting("physics/3d/default_gravity_vector").AsVector3();
 
-	public override void _PhysicsProcess(double delta)
-	{
+	public override void _PhysicsProcess(double delta) {
 		// LookAt doesn't like parallel vectors or zero vectors
 		if (false == (Position.Normalized().Abs().IsEqualApprox(Steering.SteeringForce.Normalized().Abs())
-			|| Steering.SteeringForce.IsEqualApprox(Vector3.Zero)))
-		{
+			|| Steering.SteeringForce.IsEqualApprox(Vector3.Zero))) {
 			LookAt(Position + new Vector3(Steering.SteeringForce.X, 0, Steering.SteeringForce.Z));
 		}
 

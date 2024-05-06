@@ -6,13 +6,12 @@ using Godot;
 /// Brain
 /// </summary>
 [GlobalClass]
-public partial class Cognition : Node
-{
+public partial class Cognition : Node {
 	[Export]
 	public Node Root;
 	[Export]
 	public InitialState InitialState;
-	
+
 	public Vehicle Vehicle;
 	public Steering Steering;
 	public Perception Perception;
@@ -21,8 +20,7 @@ public partial class Cognition : Node
 
 	public Dictionary<string, object> Memory = new();
 
-	public override void _Ready()
-	{
+	public override void _Ready() {
 		Vehicle = (Vehicle)Root;
 		Steering = Root.GetChildren().OfType<Steering>().FirstOrDefault();
 		Perception = Root.GetChildren().OfType<Perception>().FirstOrDefault();
@@ -34,8 +32,7 @@ public partial class Cognition : Node
 		StateMachine.ChangeState(InitialState.GetInstance());
 	}
 
-	public override void _Process(double delta)
-	{
+	public override void _Process(double delta) {
 		StateMachine.Update(delta);
 	}
 }

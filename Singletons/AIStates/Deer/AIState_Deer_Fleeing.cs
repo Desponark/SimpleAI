@@ -2,13 +2,11 @@ using System;
 using System.Linq;
 using Godot;
 
-public class AIState_Deer_Fleeing : State<Cognition>
-{
+public class AIState_Deer_Fleeing : State<Cognition> {
 	private static readonly Lazy<AIState_Deer_Fleeing> lazy = new(() => new AIState_Deer_Fleeing());
-	public static AIState_Deer_Fleeing Instance { get { return lazy.Value; }}
+	public static AIState_Deer_Fleeing Instance { get { return lazy.Value; } }
 
-	public override void Enter(Cognition entity)
-	{
+	public override void Enter(Cognition entity) {
 		GD.Print("Enter Fleeing");
 
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
@@ -17,16 +15,14 @@ public class AIState_Deer_Fleeing : State<Cognition>
 		entity.Steering.Behaviours.Add(evade);
 	}
 
-	public override void Execute(Cognition entity, double delta)
-	{
+	public override void Execute(Cognition entity, double delta) {
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
 		if (player == null)
 			entity.StateMachine.ChangeState(AIState_Deer_Watching.Instance);
 	}
 
-	public override void Exit(Cognition entity)
-	{
+	public override void Exit(Cognition entity) {
 		GD.Print("Exit Fleeing");
 
 		var evade = entity.Steering.Behaviours.OfType<Evade>().FirstOrDefault();

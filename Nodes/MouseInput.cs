@@ -6,24 +6,20 @@ using Godot;
 /// 
 /// </summary>
 [GlobalClass]
-public partial class MouseInput : Node
-{
+public partial class MouseInput : Node {
 	[Export]
 	public Vehicle Vehicle;
 
 	[Export]
 	public Vector3 TargetPos;
 
-	public override void _Input(InputEvent @event)
-	{
-		if (@event.IsAction("click"))
-		{
+	public override void _Input(InputEvent @event) {
+		if (@event.IsAction("click")) {
 			TargetPos = ScreenPointToRay();
 		}
 	}
 
-	private Vector3 ScreenPointToRay()
-	{
+	private Vector3 ScreenPointToRay() {
 		var spaceState = Vehicle.GetWorld3D().DirectSpaceState;
 
 		var mousePos = GetViewport().GetMousePosition();
@@ -36,9 +32,8 @@ public partial class MouseInput : Node
 			To = rayEnd
 		};
 		var rayRes = spaceState.IntersectRay(rayParam);
-		
-		if (rayRes.TryGetValue("position", out var position))
-		{
+
+		if (rayRes.TryGetValue("position", out var position)) {
 			return (Vector3)position;
 		}
 		return Vector3.Zero;

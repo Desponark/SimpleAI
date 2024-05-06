@@ -1,15 +1,13 @@
 using System.Diagnostics;
 using Godot;
 
-public class StateMachine<T>
-{
+public class StateMachine<T> {
 	private T owner;
 	private State<T> currentState;
 	private State<T> previousState;
 	private State<T> globalState;
 
-	public StateMachine(T owner)
-	{
+	public StateMachine(T owner) {
 		this.owner = owner;
 		currentState = null;
 		previousState = null;
@@ -24,19 +22,16 @@ public class StateMachine<T>
 
 	public void SetGlobalState(State<T> s) => globalState = s;
 	public State<T> GlobalState() => globalState;
-	
 
-	public void Update(double delta)
-	{
+
+	public void Update(double delta) {
 		if (globalState != null) globalState.Execute(owner, delta);
 
 		if (currentState != null) currentState.Execute(owner, delta);
 	}
 
-	public void ChangeState(State<T> newState)
-	{
-		if (newState == null)
-		{
+	public void ChangeState(State<T> newState) {
+		if (newState == null) {
 			Debug.WriteLine("Trying to change to a null state");
 			return;
 		}
@@ -50,8 +45,7 @@ public class StateMachine<T>
 		currentState.Enter(owner);
 	}
 
-	public void RevertToPreviousState()
-	{
+	public void RevertToPreviousState() {
 		ChangeState(previousState);
 	}
 

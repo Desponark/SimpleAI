@@ -2,8 +2,7 @@ using Godot;
 
 
 [GlobalClass]
-public partial class GameplayStats : Node
-{
+public partial class GameplayStats : Node {
 	// gameplay stats node (general gameplay variables)
 	// - health, stamina
 	// - flight value

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://57570hbs8oqb"]
+[gd_scene load_steps=17 format=3 uid="uid://57570hbs8oqb"]
 
 [ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_y00km"]
 [ext_resource type="Script" path="res://Nodes/Cognition.cs" id="2_u3glk"]
@@ -17,7 +17,7 @@ material = SubResource("StandardMaterial3D_bl8lb")
 radius = 0.37
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ygt0v"]
-albedo_color = Color(0.477525, 0.229165, 0, 1)
+albedo_color = Color(0.478431, 0.227451, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0la74"]
 material = SubResource("StandardMaterial3D_ygt0v")
@@ -25,7 +25,11 @@ size = Vector3(0.2, 1, 0.2)
 
 [sub_resource type="BoxMesh" id="BoxMesh_vw703"]
 material = SubResource("StandardMaterial3D_ygt0v")
-size = Vector3(1, 0.1, 0.1)
+size = Vector3(0.5, 0.1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lqw5m"]
+material = SubResource("StandardMaterial3D_ygt0v")
+size = Vector3(0.2, 0.2, 0.6)
 
 [sub_resource type="BoxMesh" id="BoxMesh_85dmk"]
 material = SubResource("StandardMaterial3D_ygt0v")
@@ -54,9 +58,19 @@ mesh = SubResource("CapsuleMesh_ee7g1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.519621, -0.76804)
 mesh = SubResource("BoxMesh_0la74")
 
-[node name="Head2" type="MeshInstance3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.507221, 0)
+[node name="Antler" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(0.996195, -0.0871557, 0, 0.0871557, 0.996195, 0, 0, 0, 1, 0.3, 0.612, -0.08)
 mesh = SubResource("BoxMesh_vw703")
+skeleton = NodePath("../..")
+
+[node name="Antler2" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(-0.996195, 0.0871557, -8.74228e-08, 0.0871557, 0.996195, 0, 8.70901e-08, -7.6194e-09, -1, -0.3, 0.611, -0.08)
+mesh = SubResource("BoxMesh_vw703")
+skeleton = NodePath("../..")
+
+[node name="Head3" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4449, -0.159859)
+mesh = SubResource("BoxMesh_lqw5m")
 skeleton = NodePath("../..")
 
 [node name="Tail" type="MeshInstance3D" parent="."]

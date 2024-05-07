@@ -1,0 +1,123 @@
+[gd_scene load_steps=18 format=3 uid="uid://chs6y8mmjcs70"]
+
+[ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_ef888"]
+[ext_resource type="Script" path="res://Nodes/Cognition.cs" id="2_necvt"]
+[ext_resource type="Script" path="res://Resources/AI/InitialStates/Wolf/InitialState_Wolf.cs" id="3_y02gw"]
+[ext_resource type="Script" path="res://Nodes/GameplayStats.cs" id="4_xdow5"]
+[ext_resource type="Script" path="res://Nodes/Steering.cs" id="5_xebsv"]
+[ext_resource type="Script" path="res://Nodes/Perception.cs" id="6_cj1r6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n7ev1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bl8lb"]
+albedo_color = Color(0.423529, 0.32549, 0.188235, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ee7g1"]
+material = SubResource("StandardMaterial3D_bl8lb")
+radius = 0.41
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ygt0v"]
+albedo_color = Color(0.424839, 0.324239, 0.18688, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vw703"]
+material = SubResource("StandardMaterial3D_ygt0v")
+size = Vector3(0.3, 0.2, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4diil"]
+albedo_color = Color(0.424839, 0.324239, 0.18688, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_ibwx8"]
+material = SubResource("StandardMaterial3D_4diil")
+size = Vector3(0.3, 0.3, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_85dmk"]
+material = SubResource("StandardMaterial3D_ygt0v")
+size = Vector3(0.1, 0.8, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0la74"]
+material = SubResource("StandardMaterial3D_ygt0v")
+size = Vector3(0.2, 0.8, 0.2)
+
+[sub_resource type="Resource" id="Resource_70mci"]
+script = ExtResource("3_y02gw")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qqor1"]
+radius = 20.0
+
+[node name="Wolf" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
+collision_layer = 49
+script = ExtResource("1_ef888")
+Steering = NodePath("Steering")
+MaxSpeed = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_n7ev1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0381176, 0)
+mesh = SubResource("CapsuleMesh_ee7g1")
+
+[node name="Head2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.529742, -0.985517)
+mesh = SubResource("BoxMesh_vw703")
+
+[node name="Ear" type="MeshInstance3D" parent="Head2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.23261, 0.256)
+mesh = SubResource("PrismMesh_ibwx8")
+skeleton = NodePath("../..")
+
+[node name="Ear2" type="MeshInstance3D" parent="Head2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.149647, 0.23261, 0.256)
+mesh = SubResource("PrismMesh_ibwx8")
+skeleton = NodePath("../..")
+
+[node name="Tail" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.603904, -0.797057, 0, 0.797057, -0.603904, -2.98023e-07, -0.058082, 1.16883)
+mesh = SubResource("BoxMesh_85dmk")
+
+[node name="Legs" type="Node3D" parent="."]
+
+[node name="Leg" type="MeshInstance3D" parent="Legs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.358056, -0.52221, -0.654505)
+mesh = SubResource("BoxMesh_0la74")
+skeleton = NodePath("../..")
+
+[node name="Leg2" type="MeshInstance3D" parent="Legs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.358056, -0.52221, 0.729644)
+mesh = SubResource("BoxMesh_0la74")
+skeleton = NodePath("../..")
+
+[node name="Leg3" type="MeshInstance3D" parent="Legs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.358, -0.52221, -0.654505)
+mesh = SubResource("BoxMesh_0la74")
+skeleton = NodePath("../..")
+
+[node name="Leg4" type="MeshInstance3D" parent="Legs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.358, -0.52221, 0.729644)
+mesh = SubResource("BoxMesh_0la74")
+skeleton = NodePath("../..")
+
+[node name="Cognition" type="Node" parent="." node_paths=PackedStringArray("Root")]
+script = ExtResource("2_necvt")
+Root = NodePath("..")
+InitialState = SubResource("Resource_70mci")
+
+[node name="GameplayStats" type="Node" parent="."]
+script = ExtResource("4_xdow5")
+
+[node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
+script = ExtResource("5_xebsv")
+Vehicle = NodePath("..")
+MaxSteeringForce = 20.0
+
+[node name="Perception" type="Node3D" parent="." node_paths=PackedStringArray("Root", "Area3D")]
+script = ExtResource("6_cj1r6")
+Root = NodePath("..")
+Area3D = NodePath("Area3D")
+
+[node name="Area3D" type="Area3D" parent="Perception"]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Perception/Area3D"]
+shape = SubResource("SphereShape3D_qqor1")

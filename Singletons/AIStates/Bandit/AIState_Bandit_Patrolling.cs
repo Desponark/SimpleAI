@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Godot;
 
 public class AIState_Bandit_Patrolling : State<Cognition> {
 	private static readonly Lazy<AIState_Bandit_Patrolling> lazy = new(() => new AIState_Bandit_Patrolling());
@@ -8,7 +9,7 @@ public class AIState_Bandit_Patrolling : State<Cognition> {
 
 
 	public override void Enter(Cognition entity) {
-		Debug.WriteLine("Enter Patrol");
+		GD.Print(entity.Root.Name + " Enter Patrol");
 
 		var wander = new Wander();
 		entity.Steering.Behaviours.Add(wander);
@@ -22,7 +23,7 @@ public class AIState_Bandit_Patrolling : State<Cognition> {
 	}
 
 	public override void Exit(Cognition entity) {
-		Debug.WriteLine("Exit Patrol");
+		GD.Print(entity.Root.Name + " Exit Patrol");
 
 		var wander = entity.Steering.Behaviours.OfType<Wander>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(wander);

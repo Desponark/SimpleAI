@@ -7,7 +7,7 @@ public class AIState_Deer_Fleeing : State<Cognition> {
 	public static AIState_Deer_Fleeing Instance { get { return lazy.Value; } }
 
 	public override void Enter(Cognition entity) {
-		GD.Print("Enter Fleeing");
+		GD.Print(entity.Root.Name + " Enter Fleeing");
 
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
@@ -23,7 +23,7 @@ public class AIState_Deer_Fleeing : State<Cognition> {
 	}
 
 	public override void Exit(Cognition entity) {
-		GD.Print("Exit Fleeing");
+		GD.Print(entity.Root.Name + " Exit Fleeing");
 
 		var evade = entity.Steering.Behaviours.OfType<Evade>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(evade);

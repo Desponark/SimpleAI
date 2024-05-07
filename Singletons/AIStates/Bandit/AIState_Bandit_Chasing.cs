@@ -9,7 +9,7 @@ public class AIState_Bandit_Chasing : State<Cognition> {
 
 
 	public override void Enter(Cognition entity) {
-		Debug.WriteLine("Enter Chasing");
+		GD.Print(entity.Root.Name + " Enter Chasing");
 
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
@@ -32,7 +32,7 @@ public class AIState_Bandit_Chasing : State<Cognition> {
 	}
 
 	public override void Exit(Cognition entity) {
-		Debug.WriteLine("Exit Chasing");
+		GD.Print(entity.Root.Name + " Exit Chasing");
 
 		var pursuit = entity.Steering.Behaviours.OfType<Pursuit>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(pursuit);

@@ -8,7 +8,7 @@ public class AIState_Wolf_Disengaging : State<Cognition> {
 
 
 	public override void Enter(Cognition entity) {
-		GD.Print(entity + " Enter Disengaging");
+		GD.Print(entity.Root.Name + " Enter Disengaging");
 
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
@@ -30,7 +30,7 @@ public class AIState_Wolf_Disengaging : State<Cognition> {
 	}
 
 	public override void Exit(Cognition entity) {
-		GD.Print(entity + " Exit Disengaging");
+		GD.Print(entity.Root.Name + " Exit Disengaging");
 
 		var flee = entity.Steering.Behaviours.OfType<Flee>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(flee);

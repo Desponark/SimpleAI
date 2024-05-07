@@ -9,7 +9,7 @@ public class AIState_Bandit_Attacking : State<Cognition> {
 
 
 	public override void Enter(Cognition entity) {
-		Debug.WriteLine("Enter attacking");
+		GD.Print(entity.Root.Name + " Enter attacking");
 
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
@@ -33,13 +33,13 @@ public class AIState_Bandit_Attacking : State<Cognition> {
 
 		// if we get close enough it counts as successfull attack for now
 		if (entity.Vehicle.Position.DistanceTo(player.Position) <= 1.5) {
-			GD.Print("ATTACKED: " + player);
+			GD.Print(entity.Root.Name + " ATTACKED: " + player.Name);
 			entity.StateMachine.ChangeState(AIState_Bandit_Fighting.Instance);
 		}
 	}
 
 	public override void Exit(Cognition entity) {
-		Debug.WriteLine("Exit attacking");
+		GD.Print(entity.Root.Name + " Exit attacking");
 
 		var seek = entity.Steering.Behaviours.OfType<Seek>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(seek);

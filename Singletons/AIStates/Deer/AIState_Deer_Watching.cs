@@ -6,7 +6,7 @@ public class AIState_Deer_Watching : State<Cognition> {
 	public static AIState_Deer_Watching Instance { get { return lazy.Value; } }
 
 	public override void Enter(Cognition entity) {
-		GD.Print("Enter Watching");
+		GD.Print(entity.Root.Name + " Enter Watching");
 	}
 
 	public override void Execute(Cognition entity, double delta) {
@@ -29,6 +29,6 @@ public class AIState_Deer_Watching : State<Cognition> {
 	}
 
 	public override void Exit(Cognition entity) {
-		GD.Print("Exit Watching");
+		GD.Print(entity.Root.Name + " Exit Watching");
 	}
 }

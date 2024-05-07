@@ -9,7 +9,7 @@ public class AIState_Bandit_Fighting : State<Cognition> {
 
 
 	public override void Enter(Cognition entity) {
-		Debug.WriteLine("Enter fighting");
+		GD.Print(entity.Root.Name + " Enter fighting");
 
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
@@ -20,6 +20,7 @@ public class AIState_Bandit_Fighting : State<Cognition> {
 		entity.Steering.Behaviours.Add(approach);
 
 		var orbit = new Orbit(player, Random.Shared.NextDouble() >= 0.5);
+		orbit.Weight = 0.5f;
 		entity.Steering.Behaviours.Add(orbit);
 
 		entity.Memory["attackInterval"] = (float)Random.Shared.Next(2, 6);
@@ -45,7 +46,7 @@ public class AIState_Bandit_Fighting : State<Cognition> {
 	}
 
 	public override void Exit(Cognition entity) {
-		Debug.WriteLine("Exit fighting");
+		GD.Print(entity.Root.Name + "Exit fighting");
 
 		var flee = entity.Steering.Behaviours.OfType<Flee>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(flee);

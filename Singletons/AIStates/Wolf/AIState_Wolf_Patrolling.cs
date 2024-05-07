@@ -8,7 +8,7 @@ public class AIState_Wolf_Patrolling : State<Cognition> {
 
 
 	public override void Enter(Cognition entity) {
-		GD.Print(entity + " Enter Patrolling");
+		GD.Print(entity.Root.Name + " Enter Patrolling");
 
 		var wander = new Wander();
 		wander.Weight = 0.5f;
@@ -23,7 +23,7 @@ public class AIState_Wolf_Patrolling : State<Cognition> {
 	}
 
 	public override void Exit(Cognition entity) {
-		GD.Print(entity + " Enter Patrolling");
+		GD.Print(entity.Root.Name + " Enter Patrolling");
 
 		var wander = entity.Steering.Behaviours.OfType<Wander>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(wander);

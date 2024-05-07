@@ -7,7 +7,7 @@ public class AIState_Wolf_Observing : State<Cognition> {
 
 
 	public override void Enter(Cognition entity) {
-		GD.Print(entity + " Enter Observing");
+		GD.Print(entity.Root.Name + " Enter Observing");
 	}
 
 	public override void Execute(Cognition entity, double delta) {
@@ -28,10 +28,9 @@ public class AIState_Wolf_Observing : State<Cognition> {
 		if (entity.GameplayStats.Fight >= entity.GameplayStats.MaxFight) {
 			entity.StateMachine.ChangeState(AIState_Wolf_Chasing.Instance);
 		}
-
 	}
 
 	public override void Exit(Cognition entity) {
-		GD.Print(entity + " Exit Observing");
+		GD.Print(entity.Root.Name + " Exit Observing");
 	}
 }

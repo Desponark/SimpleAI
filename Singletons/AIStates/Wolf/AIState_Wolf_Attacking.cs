@@ -8,7 +8,7 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 
 
 	public override void Enter(Cognition entity) {
-		GD.Print(entity + " Enter Attacking");
+		GD.Print(entity.Root.Name + " Enter Attacking");
 
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
@@ -32,14 +32,14 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 		entity.Memory["attackDuration"] = (float)entity.Memory["attackDuration"] - (float)delta;
 
 		if (entity.Vehicle.Position.DistanceTo(player.Position) <= 1.5) {
-			GD.Print(entity + " ATTACKED " + player);
+			GD.Print(entity.Root.Name + " ATTACKED " + player.Name);
 			entity.GameplayStats.Fight -= 33;
 			entity.StateMachine.ChangeState(AIState_Wolf_Disengaging.Instance);
 		}
 	}
 
 	public override void Exit(Cognition entity) {
-		GD.Print(entity + " Exit Attacking");
+		GD.Print(entity.Root.Name + " Exit Attacking");
 
 		var seek = entity.Steering.Behaviours.OfType<Seek>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(seek);

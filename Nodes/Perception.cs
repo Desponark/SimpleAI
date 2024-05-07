@@ -46,12 +46,10 @@ public partial class Perception : Node3D {
 		if (body != Root) {
 			perceptibleBodies.Add(body);
 		}
-		Debug.WriteLine("body entered: " + body);
 	}
 
 	private void BodyExited(Node3D body) {
 		perceptibleBodies.Remove(body);
 		VisibleBodies.Remove(body);
-		Debug.WriteLine("body exited: " + body);
 	}
 }

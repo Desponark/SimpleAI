@@ -10,12 +10,11 @@ public class AIState_Wolf_Observing : State<Cognition> {
 		GD.Print(entity.Root.Name + " Enter Observing");
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Node3D)entity.Memory["lastSeenPlayer"];
 
 		if (player == null) {
-			entity.StateMachine.ChangeState(AIState_Wolf_Patrolling.Instance);
-			return;
+			return AIState_Wolf_Patrolling.Instance;
 		}
 
 		entity.Vehicle.LookAt(player.Position);
@@ -26,8 +25,10 @@ public class AIState_Wolf_Observing : State<Cognition> {
 		}
 
 		if (entity.GameplayStats.Fight >= entity.GameplayStats.MaxFight) {
-			entity.StateMachine.ChangeState(AIState_Wolf_Chasing.Instance);
+			return AIState_Wolf_Chasing.Instance;
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

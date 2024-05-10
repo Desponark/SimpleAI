@@ -26,10 +26,7 @@ public partial class Cognition : Node {
 		Perception = Root.GetChildren().OfType<Perception>().FirstOrDefault();
 		GameplayStats = Root.GetChildren().OfType<GameplayStats>().FirstOrDefault();
 
-		StateMachine = new StateMachine<Cognition>(this);
-		StateMachine.SetGlobalState(InitialState.GetGlobalInstance());
-		StateMachine.SetCurrentState(AIState_Empty.Instance);
-		StateMachine.ChangeState(InitialState.GetInstance());
+		StateMachine = new StateMachine<Cognition>(this, InitialState.GetInstance(), InitialState.GetGlobalInstance());
 	}
 
 	public override void _Process(double delta) {

@@ -16,17 +16,18 @@ public class AIState_Wolf_Disengaging : State<Cognition> {
 		entity.Steering.Behaviours.Add(flee);
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
 		if (player == null) {
-			entity.StateMachine.ChangeState(AIState_Wolf_Observing.Instance);
-			return;
+			return AIState_Wolf_Observing.Instance;
 		}
 
 		if (entity.Vehicle.Position.DistanceTo(player.Position) >= 15) {
-			entity.StateMachine.ChangeState(AIState_Wolf_Observing.Instance);
+			return AIState_Wolf_Observing.Instance;
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

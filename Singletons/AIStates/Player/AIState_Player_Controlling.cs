@@ -15,13 +15,15 @@ public class AIState_Player_Controlling : State<Cognition> {
 		entity.Steering.Behaviours.Add(seek);
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		if (entity.Memory.TryGetValue("MouseInput", out var value) == false || value == null)
 			entity.Memory["MouseInput"] = entity.Root.GetChildren().OfType<MouseInput>().FirstOrDefault();
 		var mouseInput = (MouseInput)entity.Memory["MouseInput"];
 
 		var seek = entity.Steering.Behaviours.OfType<Seek>().FirstOrDefault();
 		seek.SetTargetPos(mouseInput.TargetPos);
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

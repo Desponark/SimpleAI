@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Godot;
 
@@ -17,18 +16,20 @@ public class AIState_Bandit_Chasing : State<Cognition> {
 		entity.Steering.Behaviours.Add(pursuit);
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Node3D)entity.Memory["lastSeenPlayer"];
 
 		if (player == null) {
-			entity.StateMachine.ChangeState(AIState_Bandit_Patrolling.Instance);
+			return AIState_Bandit_Patrolling.Instance;
 		}
 		else {
 			var distance = entity.Vehicle.Position.DistanceTo(player.Position);
 			if (distance < 5) {
-				entity.StateMachine.ChangeState(AIState_Bandit_Fighting.Instance);
+				return AIState_Bandit_Fighting.Instance;
 			}
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

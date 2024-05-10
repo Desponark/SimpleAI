@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -13,15 +12,18 @@ public class AIState_Bandit_Patrolling : State<Cognition> {
 
 		var path3D = entity.Root.GetParent() as Path3D ?? throw new Exception("Parent node needs to be a Path3D");
 		var points = path3D.Curve.GetBakedPoints();
+
 		var followPath = new FollowPath(points);
 		entity.Steering.Behaviours.Add(followPath);
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 		if (player != null) {
-			entity.StateMachine.ChangeState(AIState_Bandit_Chasing.Instance);
+			return AIState_Bandit_Chasing.Instance;
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

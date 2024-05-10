@@ -7,7 +7,8 @@ public class AIState_Empty : State<Cognition> {
 	public override void Enter(Cognition entity) {
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

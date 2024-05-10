@@ -15,11 +15,13 @@ public class AIState_Deer_Fleeing : State<Cognition> {
 		entity.Steering.Behaviours.Add(evade);
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
 		if (player == null)
-			entity.StateMachine.ChangeState(AIState_Deer_Watching.Instance);
+			return AIState_Deer_Watching.Instance;
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

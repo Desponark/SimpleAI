@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Godot;
 
@@ -19,23 +18,25 @@ public class AIState_Bandit_Attacking : State<Cognition> {
 		entity.Memory["attackDuration"] = 2f;
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
 		if (player == null)
-			entity.StateMachine.ChangeState(AIState_Bandit_Fighting.Instance);
+			return AIState_Bandit_Fighting.Instance;
 
 		// try attacking for a maximum amount of time only!
 		if ((float)entity.Memory["attackDuration"] < 0f) {
-			entity.StateMachine.ChangeState(AIState_Bandit_Fighting.Instance);
+			return AIState_Bandit_Fighting.Instance;
 		}
 		entity.Memory["attackDuration"] = (float)entity.Memory["attackDuration"] - (float)delta;
 
 		// if we get close enough it counts as successfull attack for now
 		if (entity.Vehicle.Position.DistanceTo(player.Position) <= 1.5) {
 			GD.Print(entity.Root.Name + " ATTACKED: " + player.Name);
-			entity.StateMachine.ChangeState(AIState_Bandit_Fighting.Instance);
+			return AIState_Bandit_Fighting.Instance;
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

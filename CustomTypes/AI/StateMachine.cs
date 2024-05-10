@@ -1,5 +1,4 @@
-using System.Diagnostics;
-using Godot;
+using System;
 
 public class StateMachine<T> {
 	private T owner;
@@ -7,11 +6,13 @@ public class StateMachine<T> {
 	private State<T> previousState;
 	private State<T> globalState;
 
-	public StateMachine(T owner) {
+	public StateMachine(T owner, State<T> currentState, State<T> globalState = null) {
 		this.owner = owner;
-		currentState = null;
-		previousState = null;
-		globalState = null;
+		this.currentState = currentState;
+		this.previousState = null;
+		this.globalState = globalState;
+
+		ChangeState(this.currentState);
 	}
 
 	public void SetCurrentState(State<T> s) => currentState = s;
@@ -25,22 +26,21 @@ public class StateMachine<T> {
 
 
 	public void Update(double delta) {
-		if (globalState != null) globalState.Execute(owner, delta);
+		var newGlobalState = globalState?.Execute(owner, delta);
+		if (newGlobalState != null)
+			ChangeState(newGlobalState);
 
-		if (currentState != null) currentState.Execute(owner, delta);
+		var newCurrentState = currentState?.Execute(owner, delta);
+		if (newCurrentState != null)
+			ChangeState(newCurrentState);
 	}
 
-	public void ChangeState(State<T> newState) {
-		if (newState == null) {
-			Debug.WriteLine("Trying to change to a null state");
-			return;
-		}
-
+	private void ChangeState(State<T> newState) {
 		previousState = currentState;
 
 		currentState.Exit(owner);
 
-		currentState = newState;
+		currentState = newState ?? throw new System.Exception("Trying to change to a null state");
 
 		currentState.Enter(owner);
 	}

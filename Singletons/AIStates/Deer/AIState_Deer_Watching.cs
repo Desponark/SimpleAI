@@ -9,11 +9,10 @@ public class AIState_Deer_Watching : State<Cognition> {
 		GD.Print(entity.Root.Name + " Enter Watching");
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 		if (player == null) {
-			entity.StateMachine.ChangeState(AIState_Deer_Patrolling.Instance);
-			return;
+			return AIState_Deer_Patrolling.Instance;
 		}
 
 		entity.Vehicle.LookAt(player.Position);
@@ -24,8 +23,10 @@ public class AIState_Deer_Watching : State<Cognition> {
 		}
 
 		if (entity.GameplayStats.Flight >= entity.GameplayStats.MaxFlight) {
-			entity.StateMachine.ChangeState(AIState_Deer_Fleeing.Instance);
+			return AIState_Deer_Fleeing.Instance;
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

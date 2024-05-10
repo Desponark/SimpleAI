@@ -16,18 +16,19 @@ public class AIState_Wolf_Chasing : State<Cognition> {
 		entity.Steering.Behaviours.Add(pursuit);
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Node3D)entity.Memory["lastSeenPlayer"];
 
 		if (player == null) {
-			entity.StateMachine.ChangeState(AIState_Wolf_Observing.Instance);
-			return;
+			return AIState_Wolf_Observing.Instance;
 		}
 
 		var distance = entity.Vehicle.Position.DistanceTo(player.Position);
 		if (distance < 6) {
-			entity.StateMachine.ChangeState(AIState_Wolf_Attacking.Instance);
+			return AIState_Wolf_Attacking.Instance;
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

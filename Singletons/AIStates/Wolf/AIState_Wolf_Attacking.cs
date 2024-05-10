@@ -19,23 +19,24 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 		entity.Memory["attackDuration"] = 2f;
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
 
 		if (player == null) {
-			entity.StateMachine.ChangeState(AIState_Wolf_Observing.Instance);
-			return;
+			return AIState_Wolf_Observing.Instance;
 		}
 		if ((float)entity.Memory["attackDuration"] < 0f) {
-			entity.StateMachine.ChangeState(AIState_Wolf_Disengaging.Instance);
+			return AIState_Wolf_Disengaging.Instance;
 		}
 		entity.Memory["attackDuration"] = (float)entity.Memory["attackDuration"] - (float)delta;
 
 		if (entity.Vehicle.Position.DistanceTo(player.Position) <= 1.5) {
 			GD.Print(entity.Root.Name + " ATTACKED " + player.Name);
 			entity.GameplayStats.Fight -= 33;
-			entity.StateMachine.ChangeState(AIState_Wolf_Disengaging.Instance);
+			return AIState_Wolf_Disengaging.Instance;
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

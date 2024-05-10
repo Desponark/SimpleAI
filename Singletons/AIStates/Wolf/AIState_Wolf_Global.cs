@@ -8,7 +8,7 @@ public class AIState_Wolf_Global : State<Cognition> {
 	public override void Enter(Cognition entity) {
 	}
 
-	public override void Execute(Cognition entity, double delta) {
+	public override State<Cognition> Execute(Cognition entity, double delta) {
 		MemorizePlayer(entity, delta);
 
 		if (entity.GameplayStats.Fight > 0) {
@@ -17,6 +17,8 @@ public class AIState_Wolf_Global : State<Cognition> {
 		else {
 			entity.GameplayStats.Fight = 0;
 		}
+
+		return null;
 	}
 
 	public override void Exit(Cognition entity) {

@@ -15,20 +15,8 @@ public class StateMachine<T> {
 		ChangeState(this.currentState);
 	}
 
-	public void SetCurrentState(State<T> s) => currentState = s;
-	public State<T> CurrentState() => currentState;
-
-	public void SetPreviousState(State<T> s) => previousState = s;
-	public State<T> PreviousState() => previousState;
-
-	public void SetGlobalState(State<T> s) => globalState = s;
-	public State<T> GlobalState() => globalState;
-
-
 	public void Update(double delta) {
-		var newGlobalState = globalState?.Execute(owner, delta);
-		if (newGlobalState != null)
-			ChangeState(newGlobalState);
+		globalState?.Execute(owner, delta);
 
 		var newCurrentState = currentState?.Execute(owner, delta);
 		if (newCurrentState != null)
@@ -40,7 +28,7 @@ public class StateMachine<T> {
 
 		currentState.Exit(owner);
 
-		currentState = newState ?? throw new System.Exception("Trying to change to a null state");
+		currentState = newState ?? throw new Exception("Trying to change to a null state");
 
 		currentState.Enter(owner);
 	}

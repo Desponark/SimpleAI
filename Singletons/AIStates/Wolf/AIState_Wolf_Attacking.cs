@@ -10,9 +10,9 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 	public override void Enter(Cognition entity) {
 		GD.Print(entity.Root.Name + " Enter Attacking");
 
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		var seek = new Seek(player);
+		var seek = new Seek(target);
 		seek.Weight = 2;
 		entity.Steering.Behaviours.Add(seek);
 
@@ -20,9 +20,9 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		if (player == null) {
+		if (target == null) {
 			return AIState_Wolf_Observing.Instance;
 		}
 		if ((float)entity.Memory["attackDuration"] < 0f) {
@@ -30,8 +30,8 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 		}
 		entity.Memory["attackDuration"] = (float)entity.Memory["attackDuration"] - (float)delta;
 
-		if (entity.Vehicle.Position.DistanceTo(player.Position) <= 1.5) {
-			GD.Print(entity.Root.Name + " ATTACKED " + player.Name);
+		if (entity.Vehicle.Position.DistanceTo(target.Position) <= 1.5) {
+			GD.Print(entity.Root.Name + " ATTACKED " + target.Name);
 			entity.GameplayStats.Fight -= 33;
 			return AIState_Wolf_Disengaging.Instance;
 		}

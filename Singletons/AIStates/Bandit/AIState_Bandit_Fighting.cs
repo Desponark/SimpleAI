@@ -10,34 +10,34 @@ public class AIState_Bandit_Fighting : State<Cognition> {
 	public override void Enter(Cognition entity) {
 		GD.Print(entity.Root.Name + " Enter fighting");
 
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		var flee = new Flee(player, 4);
+		var flee = new Flee(target, 4);
 		entity.Steering.Behaviours.Add(flee);
 
-		var approach = new Approach(player, 6);
+		var approach = new Approach(target, 6);
 		entity.Steering.Behaviours.Add(approach);
 
-		var orbit = new Orbit(player, Random.Shared.NextDouble() >= 0.5);
-		orbit.Weight = 0.5f;
+		var orbit = new Orbit(target, Random.Shared.NextDouble() >= 0.5);
+		orbit.Weight = 0.6f;
 		entity.Steering.Behaviours.Add(orbit);
 
-		entity.Memory["attackInterval"] = (float)Random.Shared.Next(2, 6);
+		if (!entity.Memory.ContainsKey("attackInterval"))
+			entity.Memory["attackInterval"] = (float)Random.Shared.Next(0, 4);
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
-		if (player == null) {
-			return AIState_Bandit_Patrolling.Instance;
-		}
+		var target = entity.FocusTarget;
 
-		if (entity.Vehicle.Position.DistanceTo(player.Position) > 15) {
+		if (target == null)
 			return AIState_Bandit_Patrolling.Instance;
 
-		}
+		if (entity.Vehicle.Position.DistanceTo(target.Position) > 15)
+			return AIState_Bandit_Chasing.Instance;
 
-		if (entity.Vehicle.Position.DistanceTo(player.Position) < 6) {
+		if (entity.Vehicle.Position.DistanceTo(target.Position) < 6) {
 			if ((float)entity.Memory["attackInterval"] < 0) {
+				entity.Memory["attackInterval"] = (float)Random.Shared.Next(2, 4);
 				return AIState_Bandit_Attacking.Instance;
 			}
 			entity.Memory["attackInterval"] = (float)entity.Memory["attackInterval"] - (float)delta;

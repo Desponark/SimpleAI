@@ -41,7 +41,7 @@ script = ExtResource("3_fu2h5")
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_eqchv"]
 radius = 20.0
 
-[node name="Deer" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
+[node name="Deer" type="CharacterBody3D" node_paths=PackedStringArray("Steering") groups=["Deer"]]
 collision_layer = 49
 script = ExtResource("1_y00km")
 Steering = NodePath("Steering")

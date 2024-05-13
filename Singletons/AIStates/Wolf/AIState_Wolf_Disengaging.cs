@@ -10,20 +10,21 @@ public class AIState_Wolf_Disengaging : State<Cognition> {
 	public override void Enter(Cognition entity) {
 		GD.Print(entity.Root.Name + " Enter Disengaging");
 
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		var flee = new Flee(player, 15);
+		var flee = new Flee(target, 15);
+		flee.Weight = 1.5f;
 		entity.Steering.Behaviours.Add(flee);
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		if (player == null) {
+		if (target == null) {
 			return AIState_Wolf_Observing.Instance;
 		}
 
-		if (entity.Vehicle.Position.DistanceTo(player.Position) >= 15) {
+		if (entity.Vehicle.Position.DistanceTo(target.Position) >= 15) {
 			return AIState_Wolf_Observing.Instance;
 		}
 

@@ -11,18 +11,16 @@ public class AIState_Wolf_Observing : State<Cognition> {
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Node3D)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		if (player == null) {
+		if (target == null) {
 			return AIState_Wolf_Patrolling.Instance;
 		}
 
-		entity.Vehicle.LookAt(player.Position);
+		entity.Vehicle.LookAt(target.Position);
 
-		var distanceTo = entity.Vehicle.Position.DistanceTo(player.Position);
-		if (distanceTo <= 18) {
-			entity.GameplayStats.Fight += (float)delta * (300 / distanceTo);
-		}
+		var distanceTo = entity.Vehicle.Position.DistanceTo(target.Position);
+		entity.GameplayStats.Fight += (float)delta * Mathf.Pow(50 / distanceTo, 2);
 
 		if (entity.GameplayStats.Fight >= entity.GameplayStats.MaxFight) {
 			return AIState_Wolf_Chasing.Instance;

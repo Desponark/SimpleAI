@@ -18,7 +18,8 @@ public partial class Cognition : Node {
 	public GameplayStats GameplayStats;
 	public StateMachine<Cognition> StateMachine;
 
-	public Dictionary<string, object> Memory = new();
+	public Dictionary<string, object> Memory = new(); // treating memory as short-term memory that is only being created and accessed in the same state is possibly a good idea for keeping a good overview
+	public Vehicle FocusTarget;
 
 	public override void _Ready() {
 		Vehicle = (Vehicle)Root;

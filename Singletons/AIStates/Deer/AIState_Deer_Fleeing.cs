@@ -9,16 +9,17 @@ public class AIState_Deer_Fleeing : State<Cognition> {
 	public override void Enter(Cognition entity) {
 		GD.Print(entity.Root.Name + " Enter Fleeing");
 
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
+		entity.Memory["prevTarget"] = target;
 
-		var evade = new Evade(player, 25);
+		var evade = new Evade(target, 25);
 		entity.Steering.Behaviours.Add(evade);
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		if (player == null)
+		if (target != entity.Memory["prevTarget"])
 			return AIState_Deer_Watching.Instance;
 
 		return null;

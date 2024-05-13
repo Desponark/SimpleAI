@@ -10,17 +10,15 @@ public class AIState_Deer_Watching : State<Cognition> {
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
-		if (player == null) {
+		var target = entity.FocusTarget;
+		if (target == null) {
 			return AIState_Deer_Patrolling.Instance;
 		}
 
-		entity.Vehicle.LookAt(player.Position);
+		entity.Vehicle.LookAt(target.Position);
 
-		var distanceTo = entity.Vehicle.Position.DistanceTo(player.Position);
-		if (distanceTo <= 18) {
-			entity.GameplayStats.Flight += (float)delta * (300 / distanceTo);
-		}
+		var distanceTo = entity.Vehicle.Position.DistanceTo(target.Position);
+		entity.GameplayStats.Flight += (float)delta * Mathf.Pow(50 / distanceTo, 2);
 
 		if (entity.GameplayStats.Flight >= entity.GameplayStats.MaxFlight) {
 			return AIState_Deer_Fleeing.Instance;

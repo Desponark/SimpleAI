@@ -10,20 +10,20 @@ public class AIState_Bandit_Chasing : State<Cognition> {
 	public override void Enter(Cognition entity) {
 		GD.Print(entity.Root.Name + " Enter Chasing");
 
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		var pursuit = new Pursuit(player);
+		var pursuit = new Pursuit(target);
 		entity.Steering.Behaviours.Add(pursuit);
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Node3D)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		if (player == null) {
+		if (target == null) {
 			return AIState_Bandit_Patrolling.Instance;
 		}
 		else {
-			var distance = entity.Vehicle.Position.DistanceTo(player.Position);
+			var distance = entity.Vehicle.Position.DistanceTo(target.Position);
 			if (distance < 5) {
 				return AIState_Bandit_Fighting.Instance;
 			}

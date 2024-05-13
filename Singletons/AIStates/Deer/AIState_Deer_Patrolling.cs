@@ -16,8 +16,8 @@ public class AIState_Deer_Patrolling : State<Cognition> {
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = entity.Perception.VisibleBodies.Find(x => x.IsInGroup("Player"));
-		if (player != null) {
+		var body = entity.FocusTarget;
+		if (body != null) {
 			return AIState_Deer_Watching.Instance;
 		}
 

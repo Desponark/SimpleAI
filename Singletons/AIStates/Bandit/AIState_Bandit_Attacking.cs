@@ -10,29 +10,28 @@ public class AIState_Bandit_Attacking : State<Cognition> {
 	public override void Enter(Cognition entity) {
 		GD.Print(entity.Root.Name + " Enter attacking");
 
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		var seek = new Seek(player);
+		var seek = new Seek(target);
 		entity.Steering.Behaviours.Add(seek);
 
 		entity.Memory["attackDuration"] = 2f;
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
+		var target = entity.FocusTarget;
 
-		if (player == null)
+		if (target == null)
 			return AIState_Bandit_Fighting.Instance;
 
-		// try attacking for a maximum amount of time only!
-		if ((float)entity.Memory["attackDuration"] < 0f) {
+		if ((float)entity.Memory["attackDuration"] < 0f) // only try attacking for a duration
 			return AIState_Bandit_Fighting.Instance;
-		}
+
 		entity.Memory["attackDuration"] = (float)entity.Memory["attackDuration"] - (float)delta;
 
-		// if we get close enough it counts as successfull attack for now
-		if (entity.Vehicle.Position.DistanceTo(player.Position) <= 1.5) {
-			GD.Print(entity.Root.Name + " ATTACKED: " + player.Name);
+		// simulate attack via print
+		if (entity.Vehicle.Position.DistanceTo(target.Position) <= 1.5) {
+			GD.Print(entity.Root.Name + " ATTACKED: " + target.Name);
 			return AIState_Bandit_Fighting.Instance;
 		}
 

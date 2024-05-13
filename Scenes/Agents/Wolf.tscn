@@ -44,7 +44,7 @@ script = ExtResource("3_y02gw")
 [sub_resource type="SphereShape3D" id="SphereShape3D_qqor1"]
 radius = 20.0
 
-[node name="Wolf" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
+[node name="Wolf" type="CharacterBody3D" node_paths=PackedStringArray("Steering") groups=["Wolf"]]
 collision_layer = 49
 script = ExtResource("1_ef888")
 Steering = NodePath("Steering")

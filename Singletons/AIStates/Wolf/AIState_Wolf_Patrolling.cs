@@ -16,8 +16,8 @@ public class AIState_Wolf_Patrolling : State<Cognition> {
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var player = (Vehicle)entity.Memory["lastSeenPlayer"];
-		if (player != null) {
+		var target = entity.FocusTarget;
+		if (target != null) {
 			return AIState_Wolf_Observing.Instance;
 		}
 

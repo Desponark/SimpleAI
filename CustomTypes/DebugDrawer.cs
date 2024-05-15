@@ -18,14 +18,14 @@ public static class DebugDrawer {
 			root.CallDeferred(Node3D.MethodName.AddChild, canvasLayer);
 		}
 
-		var debugDraw3D = canvasLayer.GetChildren().OfType<DrawControl>().FirstOrDefault();
-		if (debugDraw3D == null) {
-			debugDraw3D = new DrawControl();
-			root.CallDeferred(Node3D.MethodName.AddChild, debugDraw3D);
+		var drawControl = canvasLayer.GetChildren().OfType<DrawControl>().FirstOrDefault();
+		if (drawControl == null) {
+			drawControl = new DrawControl();
+			canvasLayer.CallDeferred(Node3D.MethodName.AddChild, drawControl);
 		}
 
 		Color c = color.GetValueOrDefault(new Color(0, 1, 0));
-		debugDraw3D.AddVector(from, to, width, c);
+		drawControl.AddVector(from, to, width, c);
 	}
 }
 

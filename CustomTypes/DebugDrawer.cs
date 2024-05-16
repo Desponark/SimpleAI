@@ -4,11 +4,11 @@ using Godot;
 
 // heavily inspired by https://kidscancode.org/godot_recipes/3.x/3d/debug_overlay/index.html
 
-/// <summary>
-/// Provides easy access for drawing debug lines & arrows
-/// </summary>
 public static class DebugDrawer {
-	public static void DrawVector(Node3D caller, Vector3 from, Vector3 to, float width = 1, Color? color = null) {
+	/// <summary>
+	/// Draws an arrow from point a to b with specified width and color
+	/// </summary>
+	public static void DrawArrow(Node3D caller, Vector3 from, Vector3 to, float width = 1, Color? color = null) {
 
 		var root = caller.GetTree().Root;
 
@@ -24,45 +24,39 @@ public static class DebugDrawer {
 			canvasLayer.CallDeferred(Node3D.MethodName.AddChild, drawControl);
 		}
 
-		Color c = color.GetValueOrDefault(new Color(0, 1, 0));
-		drawControl.AddVector(from, to, width, c);
+		Color c = color.GetValueOrDefault(Colors.Green);
+		drawControl.AddArrow(from, to, width, c);
 	}
 }
 
-/// <summary>
-/// Draws all given elements for one frame
-/// </summary>
 public partial class DrawControl : Control {
-	private List<DrawVector> debugDrawVectors = new();
+	private List<DrawArrow> drawArrows = new();
 
 	public override void _Draw() {
 		var camera = GetViewport().GetCamera3D();
-		foreach (var debugDrawVector in debugDrawVectors) {
-			debugDrawVector.Draw(this, camera);
+		foreach (var drawArrow in drawArrows) {
+			drawArrow.Draw(this, camera);
 		}
 
-		debugDrawVectors.Clear();
+		drawArrows.Clear();
 	}
 
 	public override void _PhysicsProcess(double delta) {
 		QueueRedraw();
 	}
 
-	public void AddVector(Vector3 from, Vector3 to, float width, Color color) {
-		debugDrawVectors.Add(new DrawVector(from, to, width, color));
+	public void AddArrow(Vector3 from, Vector3 to, float width, Color color) {
+		drawArrows.Add(new DrawArrow(from, to, width, color));
 	}
 }
 
-/// <summary>
-/// Data holder for each vector that should be drawn
-/// </summary>
-public class DrawVector {
+public class DrawArrow {
 	private Vector3 from;
 	private Vector3 to;
 	private float width;
 	private Color color;
 
-	public DrawVector(Vector3 from, Vector3 to, float width, Color color) {
+	public DrawArrow(Vector3 from, Vector3 to, float width, Color color) {
 		this.from = from;
 		this.to = to;
 		this.width = width;
@@ -82,6 +76,7 @@ public class DrawVector {
 		var c = pos + dir.Rotated(4 * Mathf.Pi / 3) * size;
 		var points = new Vector2[] { a, b, c };
 		var colors = new Color[] { color };
-		node.DrawPolygon(points, colors);
+		if (!Geometry2D.TriangulatePolygon(points).IsEmpty())
+			node.DrawPolygon(points, colors);
 	}
 }

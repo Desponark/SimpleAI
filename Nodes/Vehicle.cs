@@ -26,7 +26,10 @@ public partial class Vehicle : CharacterBody3D {
 			LookAt(Position + new Vector3(Steering.SteeringForce.X, 0, Steering.SteeringForce.Z));
 		}
 
-		Velocity = new Vector3(Steering.SteeringForce.X, 0, Steering.SteeringForce.Z);
+		var steeringForceMinusY = new Vector3(Steering.SteeringForce.X, 0, Steering.SteeringForce.Z);
+		DebugDrawer.DrawArrow(this, Position, Position + steeringForceMinusY, 2, Colors.DarkOrange);
+
+		Velocity = steeringForceMinusY;
 		Velocity += gravityVector * gravity;
 		MoveAndSlide();
 	}

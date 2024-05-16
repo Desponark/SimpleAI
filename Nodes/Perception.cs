@@ -31,6 +31,7 @@ public partial class Perception : Node3D {
 		foreach (var body in perceptibleBodies) {
 			var query = PhysicsRayQueryParameters3D.Create(GlobalPosition, body.GlobalPosition);
 			var result = spaceState.IntersectRay(query);
+			DebugDrawer.DrawArrow(this, GlobalPosition, (Vector3)result["position"], 1, Colors.Red);
 			if (result != null && body == (Node3D)result["collider"]) {
 				if (!VisibleBodies.Contains(body)) {
 					VisibleBodies.Add(body);

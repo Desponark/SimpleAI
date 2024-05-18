@@ -12,18 +12,12 @@ public class AIState_Bandit_Fighting : State<Cognition> {
 
 		var target = entity.FocusTarget;
 
-		var flee = new Flee(target, 4);
-		entity.Steering.Behaviours.Add(flee);
-
-		var approach = new Approach(target, 6);
-		entity.Steering.Behaviours.Add(approach);
-
-		var orbit = new Orbit(target, Random.Shared.NextDouble() >= 0.5);
-		orbit.Weight = 0.6f;
+		var randomBool = Random.Shared.NextDouble() >= 0.5;
+		var orbit = new Orbit(target, randomBool, 8);
 		entity.Steering.Behaviours.Add(orbit);
 
 		if (!entity.Memory.ContainsKey("attackInterval"))
-			entity.Memory["attackInterval"] = (float)Random.Shared.Next(0, 4);
+			entity.Memory["attackInterval"] = (float)Random.Shared.Next(6, 10);
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
@@ -35,9 +29,9 @@ public class AIState_Bandit_Fighting : State<Cognition> {
 		if (entity.Vehicle.Position.DistanceTo(target.Position) > 15)
 			return AIState_Bandit_Chasing.Instance;
 
-		if (entity.Vehicle.Position.DistanceTo(target.Position) < 6) {
+		if (entity.Vehicle.Position.DistanceTo(target.Position) < 15) {
 			if ((float)entity.Memory["attackInterval"] < 0) {
-				entity.Memory["attackInterval"] = (float)Random.Shared.Next(2, 4);
+				entity.Memory["attackInterval"] = (float)Random.Shared.Next(6, 10);
 				return AIState_Bandit_Attacking.Instance;
 			}
 			entity.Memory["attackInterval"] = (float)entity.Memory["attackInterval"] - (float)delta;
@@ -48,12 +42,6 @@ public class AIState_Bandit_Fighting : State<Cognition> {
 
 	public override void Exit(Cognition entity) {
 		GD.Print(entity.Root.Name + "Exit fighting");
-
-		var flee = entity.Steering.Behaviours.OfType<Flee>().FirstOrDefault();
-		entity.Steering.Behaviours.Remove(flee);
-
-		var approach = entity.Steering.Behaviours.OfType<Approach>().FirstOrDefault();
-		entity.Steering.Behaviours.Remove(approach);
 
 		var orbit = entity.Steering.Behaviours.OfType<Orbit>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(orbit);

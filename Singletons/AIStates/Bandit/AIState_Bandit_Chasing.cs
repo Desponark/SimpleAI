@@ -24,7 +24,7 @@ public class AIState_Bandit_Chasing : State<Cognition> {
 		}
 		else {
 			var distance = entity.Vehicle.Position.DistanceTo(target.Position);
-			if (distance < 5) {
+			if (distance <= 15) {
 				return AIState_Bandit_Fighting.Instance;
 			}
 		}

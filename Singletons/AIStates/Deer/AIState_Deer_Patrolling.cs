@@ -10,9 +10,8 @@ public class AIState_Deer_Patrolling : State<Cognition> {
 	public override void Enter(Cognition entity) {
 		GD.Print(entity.Root.Name + " Enter Patrol");
 
-		var wander = new Wander();
-		wander.Weight = 0.5f;
-		entity.Steering.Behaviours.Add(wander);
+		var behaviour = new Wander();
+		entity.Steering.Behaviours.Add(behaviour);
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {

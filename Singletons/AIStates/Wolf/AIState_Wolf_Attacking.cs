@@ -13,10 +13,11 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 		var target = entity.FocusTarget;
 
 		var seek = new Seek(target);
-		seek.Weight = 2;
 		entity.Steering.Behaviours.Add(seek);
 
-		entity.Memory["attackDuration"] = 2f;
+		entity.Vehicle.MaxSpeed *= 10;
+
+		entity.Memory["attackDuration"] = 1.5f;
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
@@ -25,9 +26,11 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 		if (target == null) {
 			return AIState_Wolf_Observing.Instance;
 		}
+
 		if ((float)entity.Memory["attackDuration"] < 0f) {
 			return AIState_Wolf_Disengaging.Instance;
 		}
+
 		entity.Memory["attackDuration"] = (float)entity.Memory["attackDuration"] - (float)delta;
 
 		if (entity.Vehicle.Position.DistanceTo(target.Position) <= 1.5) {
@@ -44,5 +47,7 @@ public class AIState_Wolf_Attacking : State<Cognition> {
 
 		var seek = entity.Steering.Behaviours.OfType<Seek>().FirstOrDefault();
 		entity.Steering.Behaviours.Remove(seek);
+
+		entity.Vehicle.MaxSpeed /= 10;
 	}
 }

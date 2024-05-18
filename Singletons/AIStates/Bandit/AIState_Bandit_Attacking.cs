@@ -15,7 +15,7 @@ public class AIState_Bandit_Attacking : State<Cognition> {
 		var seek = new Seek(target);
 		entity.Steering.Behaviours.Add(seek);
 
-		entity.Memory["attackDuration"] = 2f;
+		entity.Memory["attackDuration"] = 4f;
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {

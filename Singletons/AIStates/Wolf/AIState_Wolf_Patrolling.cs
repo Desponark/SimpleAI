@@ -11,7 +11,6 @@ public class AIState_Wolf_Patrolling : State<Cognition> {
 		GD.Print(entity.Root.Name + " Enter Patrolling");
 
 		var wander = new Wander();
-		wander.Weight = 0.5f;
 		entity.Steering.Behaviours.Add(wander);
 	}
 

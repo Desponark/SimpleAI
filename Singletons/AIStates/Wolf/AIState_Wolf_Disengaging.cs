@@ -13,7 +13,6 @@ public class AIState_Wolf_Disengaging : State<Cognition> {
 		var target = entity.FocusTarget;
 
 		var flee = new Flee(target, 15);
-		flee.Weight = 1.5f;
 		entity.Steering.Behaviours.Add(flee);
 	}
 

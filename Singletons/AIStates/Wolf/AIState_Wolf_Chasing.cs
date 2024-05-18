@@ -24,7 +24,7 @@ public class AIState_Wolf_Chasing : State<Cognition> {
 		}
 
 		var distance = entity.Vehicle.Position.DistanceTo(target.Position);
-		if (distance < 6) {
+		if (distance < 8) {
 			return AIState_Wolf_Attacking.Instance;
 		}
 

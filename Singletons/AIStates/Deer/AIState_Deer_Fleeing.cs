@@ -17,9 +17,7 @@ public class AIState_Deer_Fleeing : State<Cognition> {
 	}
 
 	public override State<Cognition> Execute(Cognition entity, double delta) {
-		var target = entity.FocusTarget;
-
-		if (target != entity.Memory["prevTarget"])
+		if (entity.FocusTarget != entity.Memory["prevTarget"])
 			return AIState_Deer_Watching.Instance;
 
 		return null;

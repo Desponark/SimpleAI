@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bbtkp72y38dc0" path="res://Scenes/Agents/Player.tscn" id="2_bp81q"]
 [ext_resource type="PackedScene" uid="uid://3fcbvh70nxt7" path="res://Scenes/Agents/Bandit.tscn" id="2_pcomq"]
-[ext_resource type="PackedScene" uid="uid://57570hbs8oqb" path="res://Scenes/Agents/Deer.tscn" id="3_u31bm"]
-[ext_resource type="PackedScene" uid="uid://chs6y8mmjcs70" path="res://Scenes/Agents/Wolf.tscn" id="4_2dove"]
+[ext_resource type="PackedScene" uid="uid://chs6y8mmjcs70" path="res://Scenes/Agents/Wolf.tscn" id="2_tw4wo"]
+[ext_resource type="PackedScene" uid="uid://57570hbs8oqb" path="res://Scenes/Agents/Deer.tscn" id="3_86eyn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xnmme"]
 size = Vector3(100, 1, 100)
@@ -56,6 +56,7 @@ item/1/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 
 item/1/navigation_layers = 1
 
 [sub_resource type="Curve3D" id="Curve3D_3crmd"]
+bake_interval = 10.0
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, -34.283, 2, -24.479, 0, 0, 0, 0, 0, 0, -33.636, 2, -12.25, 0, 0, 0, 0, 0, 0, -0.893, 2, -24.348, 0, 0, 0, 0, 0, 0, 17.433, 2, -19.118, 0, 0, 0, 0, 0, 0, 54.673, 2, -42.754, 0, 0, 0, 0, 0, 0, 42.561, 2, -49.88),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
@@ -224,33 +225,27 @@ mesh = SubResource("BoxMesh_qul45")
 [node name="GridMap" type="GridMap" parent="Environment"]
 mesh_library = SubResource("MeshLibrary_vacpg")
 data = {
-"cells": PackedInt32Array(65520, 7, 0, 65520, 4, 0, 65520, 5, 0, 65520, 3, 0, 65520, 8, 0, 131056, 5, 0, 131056, 7, 0, 131056, 3, 0, 131056, 4, 0, 131056, 8, 0, 196592, 5, 0, 196592, 7, 0, 196592, 6, 0, 65520, 9, 0, 65520, 2, 0)
+"cells": PackedInt32Array(65520, 7, 0, 65520, 4, 0, 65520, 5, 0, 65520, 3, 0, 65520, 8, 0, 131056, 5, 0, 131056, 7, 0, 131056, 3, 0, 131056, 4, 0, 131056, 8, 0, 196592, 5, 0, 196592, 7, 0, 196592, 6, 0, 65520, 9, 0, 65520, 2, 0, 65526, 10, 0, 65527, 10, 0, 65530, 10, 0, 65517, 65530, 0, 65517, 65531, 0, 131053, 65530, 0, 131053, 65531, 0, 131062, 10, 0)
 }
-metadata/_editor_floor_ = Vector3(0, 0, 0)
+metadata/_editor_floor_ = Vector3(0, 1, 0)
 
 [node name="Player" parent="." instance=ExtResource("2_bp81q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-
-[node name="Wolf" parent="." instance=ExtResource("4_2dove")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.8773, 2.48736, 41.9645)
 
 [node name="Path3D" type="Path3D" parent="."]
 curve = SubResource("Curve3D_3crmd")
 
 [node name="Bandit" parent="Path3D" instance=ExtResource("2_pcomq")]
-transform = Transform3D(-0.996211, 0, -0.0869644, 0, 1, 0, 0.0869644, 0, -0.996211, 0, 2, -38.536)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.4735, 3.75252, -22.3269)
 
-[node name="Deer" parent="." instance=ExtResource("3_u31bm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8876, 1.97933, 29.7677)
+[node name="Deer" parent="." instance=ExtResource("3_86eyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1281, 1.95433, 33.3151)
 
-[node name="Deer2" parent="." instance=ExtResource("3_u31bm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9286, 1.85335, 51.7926)
+[node name="Deer2" parent="." instance=ExtResource("3_86eyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.6334, 1.95433, 28.5325)
 
-[node name="Wolf2" parent="." instance=ExtResource("4_2dove")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 2, 57)
+[node name="Wolf" parent="." instance=ExtResource("2_tw4wo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.2774, 4.1733, 53.3487)
 
-[node name="Wolf3" parent="." instance=ExtResource("4_2dove")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7955, 1.84918, -15.0894)
-
-[node name="Wolf4" parent="." instance=ExtResource("4_2dove")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.3004, 2.20199, 14.0326)
+[node name="Wolf2" parent="." instance=ExtResource("2_tw4wo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.6391, 1.93305, 51.4895)

@@ -28,11 +28,11 @@ script = ExtResource("10_oi387")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ee105"]
 points = PackedVector3Array(0, 0, 4, 0, 2, 4, 0, 0, -30, 0, 2, -30, -15, 0, 0, -15, 2, 0, 15, 0, 0, 15, 2, 0, -10, 0, -25, -10, 2, -25, 10, 0, -25, 10, 2, -25, -20, 0, -10, -20, 2, -10, 20, 0, -10, 20, 2, -10)
 
-[node name="Bandit" type="CharacterBody3D" node_paths=PackedStringArray("Steering")]
+[node name="Bandit" type="CharacterBody3D" node_paths=PackedStringArray("Steering") groups=["Bandit"]]
 collision_layer = 49
 script = ExtResource("1_adjla")
 Steering = NodePath("Steering")
-MaxSpeed = 5
+MaxSpeed = 6
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_n7ev1")
@@ -55,7 +55,6 @@ script = ExtResource("5_pj7gf")
 [node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
 script = ExtResource("3_1fcps")
 Vehicle = NodePath("..")
-MaxSteeringForce = 6.0
 
 [node name="Perception" type="Node3D" parent="." node_paths=PackedStringArray("Root", "Area3D")]
 script = ExtResource("11_6370g")

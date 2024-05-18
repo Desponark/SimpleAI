@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using Godot;
 
 
@@ -10,6 +9,9 @@ public partial class Perception : Node3D {
 
 	[Export]
 	public Area3D Area3D;
+
+	[Export]
+	public RayCast3D[] WallFeelers = System.Array.Empty<RayCast3D>();
 
 	private List<Node3D> perceptibleBodies = new();
 	public List<Node3D> VisibleBodies = new();

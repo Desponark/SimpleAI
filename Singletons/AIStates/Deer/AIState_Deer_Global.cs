@@ -19,6 +19,10 @@ public class AIState_Deer_Global : State<Cognition> {
 		Memorize(entity, delta, highestThreat, "highestThreat", 2);
 		entity.FocusTarget = (Vehicle)entity.Memory["highestThreat"];
 
+		if (entity.Steering.Behaviours.OfType<WallAvoidance>().FirstOrDefault() == null) {
+			entity.Steering.Behaviours.Add(new WallAvoidance(entity.Perception.WallFeelers));
+		}
+
 		return null;
 	}
 

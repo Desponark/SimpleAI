@@ -111,10 +111,11 @@ script = ExtResource("4_um5yk")
 script = ExtResource("5_vjm4k")
 Vehicle = NodePath("..")
 
-[node name="Perception" type="Node3D" parent="." node_paths=PackedStringArray("Root", "Area3D")]
+[node name="Perception" type="Node3D" parent="." node_paths=PackedStringArray("Root", "Area3D", "WallFeelers")]
 script = ExtResource("6_og71n")
 Root = NodePath("..")
 Area3D = NodePath("Area3D")
+WallFeelers = [NodePath("RayCast3D"), NodePath("RayCast3D2"), NodePath("RayCast3D3")]
 
 [node name="Area3D" type="Area3D" parent="Perception"]
 collision_layer = 0
@@ -122,3 +123,12 @@ collision_mask = 16
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Perception/Area3D"]
 shape = SubResource("CylinderShape3D_eqchv")
+
+[node name="RayCast3D" type="RayCast3D" parent="Perception"]
+target_position = Vector3(0, 0, -4)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Perception"]
+target_position = Vector3(2, 0, -2)
+
+[node name="RayCast3D3" type="RayCast3D" parent="Perception"]
+target_position = Vector3(-2, 0, -2)

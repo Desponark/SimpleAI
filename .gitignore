@@ -6,3 +6,4 @@
 
 # VS Code specific ignores
 .vscode/
+.editorconfig

@@ -32,7 +32,7 @@ public class AIState_Bandit_Global : State<Cognition> {
 			// known enemy/threat type -> higher threat
 			threat += body.IsInGroup("Wolf") ? 5 : 0;
 			threat += body.IsInGroup("Player") ? 10 : 0;
-			threat += body.IsInGroup("Deer") ? -20 : 0;
+			threat += body.IsInGroup("Deer") ? -5 : 0;
 			threat += body.IsInGroup("Bandit") ? -100 : 0;
 
 			// more code can be added for evaluating threats

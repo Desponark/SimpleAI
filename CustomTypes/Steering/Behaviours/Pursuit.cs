@@ -14,18 +14,21 @@ public class Pursuit : SteeringBehaviour {
 
 	public override Vector3 Calculate(Vehicle vehicle, double delta) {
 		if (IsEvaderAheadAndFacingPursuer(vehicle))
-			return Seek.Calc(vehicle.Position, evader.Position, vehicle.MaxSpeed);
+			return Seek.Calc(vehicle, evader.Position);
 
-		var lookAheadTime = evader.Position.DistanceTo(vehicle.Position) / (vehicle.MaxSpeed + evader.MaxSpeed);
+		var lookAheadTime = vehicle.Position.DistanceTo(evader.Position) / (vehicle.MaxSpeed + evader.Velocity.Length());
 		var predictedPos = evader.Position + evader.Velocity * lookAheadTime;
 
-		return Seek.Calc(vehicle.Position, predictedPos, vehicle.MaxSpeed);
+		return Seek.Calc(vehicle, predictedPos);
 	}
 
 	private bool IsEvaderAheadAndFacingPursuer(Vehicle vehicle) {
-		var relativeHeading = vehicle.Velocity.Normalized().Dot(evader.Velocity.Normalized());
+		var vehicleHeading = -vehicle.Transform.Basis.Z;
+		var evaderHeading = -evader.Transform.Basis.Z;
+
+		var relativeHeading = vehicleHeading.Dot(evaderHeading);
 		var toEvader = evader.Position - vehicle.Position;
-		if (toEvader.Dot(vehicle.Velocity.Normalized()) > 0 && relativeHeading < -0.95) //acos(0.95)=18 degs
+		if (toEvader.Dot(vehicleHeading) > 0 && relativeHeading < -0.95) //acos(0.95)=18 degs
 			return true;
 		return false;
 	}

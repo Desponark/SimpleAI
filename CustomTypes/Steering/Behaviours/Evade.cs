@@ -7,22 +7,20 @@ using Godot;
 /// </summary>
 public class Evade : SteeringBehaviour {
 	private double evadeDistance = 10;
-	private Vehicle targetVehicle;
+	private Vehicle pursuer;
 
-	public Evade(Vehicle targetVehicle, double evadeDistance = 10) {
-		this.targetVehicle = targetVehicle;
+	public Evade(Vehicle pursuer, double evadeDistance = 10) {
+		this.pursuer = pursuer;
 		this.evadeDistance = evadeDistance;
 	}
 
 	public override Vector3 Calculate(Vehicle vehicle, double delta) {
-		var pursuer = targetVehicle;
-
-		var toPursuer = pursuer.Position.DistanceTo(vehicle.Position);
-		if (toPursuer > evadeDistance)
+		var distanceToPursuer = vehicle.Position.DistanceTo(pursuer.Position);
+		if (distanceToPursuer > evadeDistance)
 			return Vector3.Zero;
 
-		var lookAheadTime = toPursuer / (vehicle.MaxSpeed + pursuer.MaxSpeed);
+		var lookAheadTime = distanceToPursuer / (vehicle.MaxSpeed + pursuer.Velocity.Length());
 		var predictedPos = pursuer.Position + pursuer.Velocity * lookAheadTime;
-		return Seek.Calc(predictedPos, vehicle.Position, vehicle.MaxSpeed);
+		return Flee.Calc(vehicle, predictedPos);
 	}
 }

@@ -11,10 +11,12 @@ public class Approach : SteeringBehaviour {
 
 	public Approach(Vector3 targetPos, float distance = 6) {
 		this.targetPos = targetPos;
+		this.distance = distance;
 	}
 
 	public Approach(Vehicle targetVehicle, float distance = 6) {
 		this.targetVehicle = targetVehicle;
+		this.distance = distance;
 	}
 
 	public override Vector3 Calculate(Vehicle vehicle, double delta) {
@@ -24,6 +26,6 @@ public class Approach : SteeringBehaviour {
 			return Vector3.Zero;
 		}
 
-		return Seek.Calc(vehicle.Position, pos, vehicle.MaxSpeed);
+		return Seek.Calc(vehicle, pos);
 	}
 }

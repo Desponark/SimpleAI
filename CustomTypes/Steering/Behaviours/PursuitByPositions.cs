@@ -23,18 +23,18 @@ public class PursuitByPositions : SteeringBehaviour {
 		CalculateEvaderVelocity(delta);
 
 		if (evaderVelocity == Vector3.Zero) {
-			return Seek.Calc(vehicle.Position, targetPos, vehicle.MaxSpeed);
+			return Seek.Calc(vehicle, targetPos);
 		}
 		else {
 			var toEvader = targetPos - vehicle.Position;
 
 			if (IsEvaderAheadAndFacingPursuer(vehicle, toEvader))
-				return Seek.Calc(vehicle.Position, targetPos, vehicle.MaxSpeed);
+				return Seek.Calc(vehicle, targetPos);
 
 			var lookAheadTime = toEvader.Length() / (vehicle.MaxSpeed + evaderVelocity.Length());
 			var predictedPos = targetPos + evaderVelocity * lookAheadTime;
 
-			return Seek.Calc(vehicle.Position, predictedPos, vehicle.MaxSpeed);
+			return Seek.Calc(vehicle, predictedPos);
 		}
 	}
 

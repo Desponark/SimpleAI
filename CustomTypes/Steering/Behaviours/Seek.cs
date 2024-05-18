@@ -24,10 +24,11 @@ public class Seek : SteeringBehaviour {
 	}
 
 	public override Vector3 Calculate(Vehicle vehicle, double delta) {
-		return Calc(vehicle.Position, targetPos, vehicle.MaxSpeed);
+		return Calc(vehicle, targetPos);
 	}
 
-	public static Vector3 Calc(Vector3 from, Vector3 to, float maxSpeed) {
-		return from.DirectionTo(to) * maxSpeed;
+	public static Vector3 Calc(Vehicle vehicle, Vector3 to) {
+		var desiredVelocity = vehicle.Position.DirectionTo(to) * vehicle.MaxSpeed;
+		return desiredVelocity - vehicle.Velocity;
 	}
 }

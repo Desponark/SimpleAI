@@ -6,13 +6,15 @@ using Godot;
 /// Returns a steering force that steers an agent away from the target position
 /// </summary>
 public class Flee : SteeringBehaviour {
-	private Vector3 targetPos;
+	private Vector3 fixedTargetPos;
 	private Vehicle targetVehicle;
 
 	private double fleeDistance = 10;
 
-	public Flee(Vector3 targetPos, double fleeDistance = 10) {
-		this.targetPos = targetPos;
+	private Vector3 targetPos => targetVehicle != null ? targetVehicle.Position : fixedTargetPos;
+
+	public Flee(Vector3 fixedTargetPos, double fleeDistance = 10) {
+		this.fixedTargetPos = fixedTargetPos;
 		this.fleeDistance = fleeDistance;
 	}
 
@@ -22,11 +24,14 @@ public class Flee : SteeringBehaviour {
 	}
 
 	public override Vector3 Calculate(Vehicle vehicle, double delta) {
-		var pos = targetVehicle != null ? targetVehicle.Position : targetPos;
-
-		if (vehicle.Position.DistanceTo(pos) > fleeDistance)
+		if (vehicle.Position.DistanceTo(targetPos) > fleeDistance)
 			return Vector3.Zero;
 
-		return Seek.Calc(pos, vehicle.Position, vehicle.MaxSpeed);
+		return Calc(vehicle, targetPos);
+	}
+
+	public static Vector3 Calc(Vehicle vehicle, Vector3 from) {
+		var desiredVelocity = from.DirectionTo(vehicle.Position) * vehicle.MaxSpeed;
+		return desiredVelocity - vehicle.Velocity;
 	}
 }

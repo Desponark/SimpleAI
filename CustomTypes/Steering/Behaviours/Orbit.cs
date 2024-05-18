@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 
@@ -5,26 +6,36 @@ using Godot;
 /// Returns a steering force that steers an agent in an orbit around the target
 /// </summary>
 public class Orbit : SteeringBehaviour {
-	private Vector3 orbitTarget;
-	private bool orbitClockwise = true;
-
 	private Vehicle targetVehicle;
+	private Vector3 fixedOrbitTarget;
+	private bool orbitClockwise;
+	private float orbitDistance;
 
-	public Orbit(Vector3 orbitTarget, bool orbitClockwise = true) {
-		this.orbitTarget = orbitTarget;
+	private float rotdegree = Mathf.DegToRad(15);
+	private float rotation => orbitClockwise ? rotdegree : -rotdegree;
+	private Vector3 orbitTarget => targetVehicle != null ? targetVehicle.Position : fixedOrbitTarget;
+
+	public Orbit(Vector3 fixedOrbitTarget, bool orbitClockwise = true, float orbitDistance = 10) {
+		this.fixedOrbitTarget = fixedOrbitTarget;
 		this.orbitClockwise = orbitClockwise;
+		this.orbitDistance = orbitDistance;
 	}
 
-	public Orbit(Vehicle targetVehicle, bool orbitClockwise = true) {
+	public Orbit(Vehicle targetVehicle, bool orbitClockwise = true, float orbitDistance = 10) {
 		this.targetVehicle = targetVehicle;
 		this.orbitClockwise = orbitClockwise;
+		this.orbitDistance = orbitDistance;
 	}
 
 	public override Vector3 Calculate(Vehicle vehicle, double delta) {
-		var target = targetVehicle != null ? targetVehicle.Position : orbitTarget;
+		var toVehicleDir = orbitTarget.DirectionTo(vehicle.Position);
 
-		var rotation = orbitClockwise ? Mathf.DegToRad(90) : Mathf.DegToRad(-90);
-		var orbit = vehicle.Position.DirectionTo(target).Rotated(Vector3.Up, rotation);
-		return orbit * vehicle.MaxSpeed;
+		var rotatedDir = toVehicleDir.Rotated(Vector3.Up, rotation);
+
+		var orbitDir = rotatedDir * orbitDistance;
+		var orbit = orbitTarget + orbitDir;
+
+		DebugDrawer.DrawArrow(vehicle, orbitTarget, orbit);
+		return Seek.Calc(vehicle, orbit);
 	}
 }

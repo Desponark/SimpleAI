@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 
 // heavily inspired by https://kidscancode.org/godot_recipes/3.x/3d/debug_overlay/index.html
+
 
 public static class DebugDrawer {
 	/// <summary>
@@ -10,22 +10,37 @@ public static class DebugDrawer {
 	/// </summary>
 	public static void DrawArrow(Node3D caller, Vector3 from, Vector3 to, float width = 1, Color? color = null) {
 
-		var root = caller.GetTree().Root;
+		var root = caller.GetTree().CurrentScene;
 
-		var canvasLayer = root.GetChildren().OfType<CanvasLayer>().FirstOrDefault();
+		var canvasLayer = root.GetNodeOrNull<CanvasLayer>("DebugDrawerLayer");
 		if (canvasLayer == null) {
-			canvasLayer = new CanvasLayer();
-			root.CallDeferred(Node3D.MethodName.AddChild, canvasLayer);
+			canvasLayer = new CanvasLayer {
+				Name = "DebugDrawerLayer"
+			};
+			root.AddChild(canvasLayer);
 		}
 
-		var drawControl = canvasLayer.GetChildren().OfType<DrawControl>().FirstOrDefault();
+		var drawControl = canvasLayer.GetNodeOrNull<DrawControl>("DebugDrawerControl");
 		if (drawControl == null) {
-			drawControl = new DrawControl();
-			canvasLayer.CallDeferred(Node3D.MethodName.AddChild, drawControl);
+			drawControl = new DrawControl() {
+				Name = "DebugDrawerControl"
+			};
+			canvasLayer.AddChild(drawControl);
 		}
 
 		Color c = color.GetValueOrDefault(Colors.Green);
 		drawControl.AddArrow(from, to, width, c);
+	}
+
+	/// <summary>
+	/// Change the visibility for the DebugDrawer Layer
+	/// </summary>
+	public static void ChangeVisibility(Node caller, bool isVisible) {
+		var root = caller.GetTree().CurrentScene;
+
+		var canvasLayer = root.GetNodeOrNull<CanvasLayer>("DebugDrawerLayer");
+		if (canvasLayer != null)
+			canvasLayer.Visible = isVisible;
 	}
 }
 

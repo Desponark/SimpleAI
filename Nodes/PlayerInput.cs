@@ -6,16 +6,29 @@ using Godot;
 /// 
 /// </summary>
 [GlobalClass]
-public partial class MouseInput : Node {
+public partial class PlayerInput : Node {
 	[Export]
 	public Vehicle Vehicle;
 
-	[Export]
 	public Vector3 TargetPos;
 
+	public bool IsPerceptionVisible = true;
+
+
+	private bool isDebugDrawerVisible = true;
+
 	public override void _Input(InputEvent @event) {
-		if (@event.IsAction("click")) {
+		if (@event.IsActionReleased("click")) {
 			TargetPos = ScreenPointToRay();
+		}
+
+		if (@event.IsActionReleased("changePerceptionVisibility")) {
+			IsPerceptionVisible = !IsPerceptionVisible;
+		}
+
+		if (@event.IsActionReleased("debugDrawer")) {
+			isDebugDrawerVisible = !isDebugDrawerVisible;
+			DebugDrawer.ChangeVisibility(this, isDebugDrawerVisible);
 		}
 	}
 

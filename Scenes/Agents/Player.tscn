@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_6s8kd"]
 [ext_resource type="Script" path="res://Nodes/Steering.cs" id="3_njhd0"]
-[ext_resource type="Script" path="res://Nodes/MouseInput.cs" id="4_h1kh5"]
 [ext_resource type="Script" path="res://Nodes/Cognition.cs" id="4_m0lqe"]
 [ext_resource type="Script" path="res://Resources/AI/InitialStates/Player/InitialState_Player.cs" id="5_o625q"]
+[ext_resource type="Script" path="res://Nodes/PlayerInput.cs" id="5_yipvd"]
 [ext_resource type="Script" path="res://Nodes/PlayerCamera.cs" id="6_pdvg7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n7ev1"]
@@ -53,8 +53,8 @@ InitialState = SubResource("Resource_0wkvo")
 script = ExtResource("3_njhd0")
 Vehicle = NodePath("..")
 
-[node name="MouseInput" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
-script = ExtResource("4_h1kh5")
+[node name="PlayerInput" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
+script = ExtResource("5_yipvd")
 Vehicle = NodePath("..")
 
 [node name="PlayerCamera" type="Camera3D" parent="." node_paths=PackedStringArray("Player")]

@@ -79,6 +79,9 @@ public class DrawArrow {
 	}
 
 	public void Draw(DrawControl node, Camera3D camera) {
+		if (!(camera.IsPositionInFrustum(from) && camera.IsPositionInFrustum(to)))
+			return;
+
 		var start = camera.UnprojectPosition(from);
 		var end = camera.UnprojectPosition(to);
 		node.DrawLine(start, end, color, width);

@@ -1,6 +1,9 @@
 using System;
 using Godot;
 
+/// <summary>
+/// Returns a steering force that steers an agent away from walls via an array of feelers
+/// </summary>
 public class WallAvoidance : SteeringBehaviour {
 	private readonly RayCast3D[] obstacleFeelers = Array.Empty<RayCast3D>();
 

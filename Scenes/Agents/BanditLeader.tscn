@@ -1,0 +1,106 @@
+[gd_scene load_steps=20 format=3 uid="uid://dwvsp20fjhydo"]
+
+[ext_resource type="Script" path="res://Nodes/Vehicle.cs" id="1_rv1d3"]
+[ext_resource type="Script" path="res://Nodes/Cognition.cs" id="2_dy4qu"]
+[ext_resource type="Script" path="res://Resources/AI/InitialStates/BanditLeader/InitialState_BanditLeader.cs" id="3_4loxl"]
+[ext_resource type="Script" path="res://Nodes/GameplayStats.cs" id="4_hq701"]
+[ext_resource type="Script" path="res://Nodes/Steering.cs" id="5_3xrxu"]
+[ext_resource type="Script" path="res://Nodes/Perception.cs" id="6_xt5p8"]
+[ext_resource type="Script" path="res://Nodes/Commanding.cs" id="7_fvnv1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n7ev1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bl8lb"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ee7g1"]
+material = SubResource("StandardMaterial3D_bl8lb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i615t"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_isk6s"]
+material = SubResource("StandardMaterial3D_i615t")
+size = Vector3(0.01, 1.3, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2frk3"]
+albedo_color = Color(0.356863, 0.243137, 0.192157, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qygwc"]
+material = SubResource("StandardMaterial3D_2frk3")
+size = Vector3(0.1, 2, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ygt0v"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0la74"]
+material = SubResource("StandardMaterial3D_ygt0v")
+size = Vector3(0.2, 0.2, 0.5)
+
+[sub_resource type="Resource" id="Resource_38v6l"]
+script = ExtResource("3_4loxl")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ee105"]
+points = PackedVector3Array(0, 0, 4, 0, 2, 4, 0, 0, -30, 0, 2, -30, -15, 0, 0, -15, 2, 0, 15, 0, 0, 15, 2, 0, -10, 0, -25, -10, 2, -25, 10, 0, -25, 10, 2, -25, -20, 0, -10, -20, 2, -10, 20, 0, -10, 20, 2, -10)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1biwx"]
+radius = 1.78188
+
+[node name="BanditLeader" type="CharacterBody3D" node_paths=PackedStringArray("Steering") groups=["Bandit", "BanditLeader"]]
+collision_layer = 49
+script = ExtResource("1_rv1d3")
+Steering = NodePath("Steering")
+MaxSpeed = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_n7ev1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ee7g1")
+
+[node name="Flag" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72213, 0.788304)
+mesh = SubResource("BoxMesh_isk6s")
+
+[node name="Flagpole" type="MeshInstance3D" parent="Flag"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.330154, -0.357476)
+mesh = SubResource("BoxMesh_qygwc")
+
+[node name="Nose" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.677053)
+mesh = SubResource("BoxMesh_0la74")
+
+[node name="Cognition" type="Node" parent="." node_paths=PackedStringArray("Root")]
+script = ExtResource("2_dy4qu")
+Root = NodePath("..")
+InitialState = SubResource("Resource_38v6l")
+
+[node name="GameplayStats" type="Node" parent="."]
+script = ExtResource("4_hq701")
+
+[node name="Steering" type="Node" parent="." node_paths=PackedStringArray("Vehicle")]
+script = ExtResource("5_3xrxu")
+Vehicle = NodePath("..")
+
+[node name="Perception" type="Node3D" parent="." node_paths=PackedStringArray("Root", "Area3D")]
+script = ExtResource("6_xt5p8")
+Root = NodePath("..")
+Area3D = NodePath("Area3D")
+
+[node name="Area3D" type="Area3D" parent="Perception"]
+collision_layer = 0
+collision_mask = 48
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Perception/Area3D"]
+shape = SubResource("ConvexPolygonShape3D_ee105")
+
+[node name="Commanding" type="Node3D" parent="." node_paths=PackedStringArray("Root")]
+script = ExtResource("7_fvnv1")
+Root = NodePath("..")
+
+[node name="Area3D" type="Area3D" parent="Commanding"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Commanding/Area3D"]
+shape = SubResource("SphereShape3D_1biwx")

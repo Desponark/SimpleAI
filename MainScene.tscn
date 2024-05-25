@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://urhw70e5mry2"]
+[gd_scene load_steps=20 format=3 uid="uid://urhw70e5mry2"]
 
 [ext_resource type="PackedScene" uid="uid://bbtkp72y38dc0" path="res://Scenes/Agents/Player.tscn" id="2_bp81q"]
 [ext_resource type="PackedScene" uid="uid://3fcbvh70nxt7" path="res://Scenes/Agents/Bandit.tscn" id="2_pcomq"]
-[ext_resource type="PackedScene" uid="uid://chs6y8mmjcs70" path="res://Scenes/Agents/Wolf.tscn" id="2_tw4wo"]
-[ext_resource type="PackedScene" uid="uid://57570hbs8oqb" path="res://Scenes/Agents/Deer.tscn" id="3_86eyn"]
+[ext_resource type="PackedScene" uid="uid://57570hbs8oqb" path="res://Scenes/Agents/Deer.tscn" id="4_i02q7"]
+[ext_resource type="PackedScene" uid="uid://dwvsp20fjhydo" path="res://Scenes/Agents/BanditLeader.tscn" id="5_r177p"]
+[ext_resource type="PackedScene" uid="uid://chs6y8mmjcs70" path="res://Scenes/Agents/Wolf.tscn" id="5_xol5u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xnmme"]
 size = Vector3(100, 1, 100)
@@ -62,6 +63,14 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
 }
 point_count = 6
+
+[sub_resource type="Curve3D" id="Curve3D_wsdrq"]
+bake_interval = 10.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -37.424, 2, 32.17, 0, 0, 0, 0, 0, 0, -37.074, 2, 1.26, 0, 0, 0, 0, 0, 0, -16.468, 2, -13.234, 0, 0, 0, 0, 0, 0, 27.714, 2, -24.236, 0, 0, 0, 0, 0, 0, 57.227, 2, -65.624, 0, 0, 0, 0, 0, 0, 23.873, 2, -73.308, 0, 0, 0, 0, 0, 0, -19.262, 2, -56.718, 0, 0, 0, 0, 0, 0, -36.201, 2, -82.913, 0, 0, 0, 0, 0, 0, -54.712, 2, -80.293, 0, 0, 0, 0, 0, 0, -55.935, 2, -17.6, 0, 0, 0, 0, 0, 0, -56.109, 2, 27.63),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 11
 
 [node name="Main" type="Node3D"]
 
@@ -236,16 +245,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 curve = SubResource("Curve3D_3crmd")
 
 [node name="Bandit" parent="Path3D" instance=ExtResource("2_pcomq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.4735, 3.75252, -22.3269)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.3482, 2.41375, -26.9617)
 
-[node name="Deer" parent="." instance=ExtResource("3_86eyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1281, 1.95433, 33.3151)
+[node name="Bandit2" parent="Path3D" instance=ExtResource("2_pcomq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3539, 2.00366, -38.0451)
 
-[node name="Deer2" parent="." instance=ExtResource("3_86eyn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.6334, 1.95433, 28.5325)
+[node name="Bandit3" parent="Path3D" instance=ExtResource("2_pcomq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.6208, 3.34877, -108.827)
 
-[node name="Wolf" parent="." instance=ExtResource("2_tw4wo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.2774, 4.1733, 53.3487)
+[node name="Path3D2" type="Path3D" parent="."]
+curve = SubResource("Curve3D_wsdrq")
 
-[node name="Wolf2" parent="." instance=ExtResource("2_tw4wo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.6391, 1.93305, 51.4895)
+[node name="BanditLeader" parent="Path3D2" instance=ExtResource("5_r177p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.0319, 2.81311, 38.1141)
+
+[node name="Deer" parent="." instance=ExtResource("4_i02q7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.1883, 3.71614, 31.6717)
+
+[node name="Deer2" parent="." instance=ExtResource("4_i02q7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.0304, 5.06312, 50.4532)
+
+[node name="Wolf" parent="." instance=ExtResource("5_xol5u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4488, 4.28728, 62.8582)
+
+[node name="Wolf2" parent="." instance=ExtResource("5_xol5u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.6657, 6.78426, 79.5449)
+
+[node name="Deer3" parent="." instance=ExtResource("4_i02q7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.831, 4.21172, 5.45849)
+
+[node name="Wolf3" parent="." instance=ExtResource("5_xol5u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.5268, 5.23382, -68.1217)

@@ -63,7 +63,7 @@ Area3D = NodePath("Area3D")
 
 [node name="Area3D" type="Area3D" parent="Perception"]
 collision_layer = 0
-collision_mask = 16
+collision_mask = 48
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Perception/Area3D"]
 shape = SubResource("ConvexPolygonShape3D_ee105")

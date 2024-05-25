@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -16,13 +17,21 @@ public partial class Perception : Node3D {
 	private List<Node3D> perceptibleBodies = new();
 	public List<Node3D> VisibleBodies = new();
 
+	private List<Node3D> perceptibleAreas = new();
+	public List<Node3D> Hearables = new();
+
 	public override void _Ready() {
 		Area3D.BodyEntered += BodyEntered;
 		Area3D.BodyExited += BodyExited;
+		Area3D.AreaEntered += AreaEntered;
+		Area3D.AreaExited += AreaExited;
 	}
 
 	public override void _PhysicsProcess(double delta) {
 		PopulateVisibleBodies(GetWorld3D().DirectSpaceState);
+
+		// TODO: add filtering how things are heared
+		Hearables = perceptibleAreas;
 	}
 
 	/// <summary>
@@ -54,5 +63,15 @@ public partial class Perception : Node3D {
 	private void BodyExited(Node3D body) {
 		perceptibleBodies.Remove(body);
 		VisibleBodies.Remove(body);
+	}
+
+	private void AreaEntered(Area3D area) {
+		GD.Print("entered: " + area.Name);
+		perceptibleAreas.Add(area);
+	}
+
+	private void AreaExited(Area3D area) {
+		GD.Print("exited: " + area.Name);
+		perceptibleAreas.Remove(area);
 	}
 }

@@ -23,6 +23,15 @@ public class AIState_Bandit_Patrolling : State<Cognition> {
 			return AIState_Bandit_Chasing.Instance;
 		}
 
+		foreach (var hearable in entity.Perception.Hearables) {
+			if (hearable.GetParent() is Commanding commanding) {
+				switch (commanding.CurrentCommand) {
+					case Commanding.Command.Follow:
+						return AIState_Bandit_FollowLeader.Instance;
+				}
+			}
+		}
+
 		return null;
 	}
 

@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 
 /// <summary>
-/// Brain
+/// Instances the StateMachine and serves as the brain of the AI. It encapsulates all logic that represents thinking and decision making.
 /// </summary>
 [GlobalClass]
 public partial class Cognition : Node {

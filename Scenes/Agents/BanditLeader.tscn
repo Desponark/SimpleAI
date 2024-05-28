@@ -58,17 +58,19 @@ shape = SubResource("CapsuleShape3D_n7ev1")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_ee7g1")
 
-[node name="Flag" type="MeshInstance3D" parent="."]
+[node name="Flag" type="MeshInstance3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72213, 0.788304)
 mesh = SubResource("BoxMesh_isk6s")
+skeleton = NodePath("../..")
 
-[node name="Flagpole" type="MeshInstance3D" parent="Flag"]
+[node name="Flagpole" type="MeshInstance3D" parent="MeshInstance3D/Flag"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.330154, -0.357476)
 mesh = SubResource("BoxMesh_qygwc")
 
-[node name="Nose" type="MeshInstance3D" parent="."]
+[node name="Nose" type="MeshInstance3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.677053)
 mesh = SubResource("BoxMesh_0la74")
+skeleton = NodePath("../..")
 
 [node name="Cognition" type="Node" parent="." node_paths=PackedStringArray("Root")]
 script = ExtResource("2_dy4qu")

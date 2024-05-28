@@ -57,23 +57,25 @@ shape = SubResource("CapsuleShape3D_n7ev1")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0381176, 0)
 mesh = SubResource("CapsuleMesh_ee7g1")
 
-[node name="Head2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.529742, -0.985517)
+[node name="Head2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.985517, 0.491624)
 mesh = SubResource("BoxMesh_vw703")
+skeleton = NodePath("../..")
 
-[node name="Ear" type="MeshInstance3D" parent="Head2"]
+[node name="Ear" type="MeshInstance3D" parent="MeshInstance3D/Head2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.23261, 0.256)
 mesh = SubResource("PrismMesh_ibwx8")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="Ear2" type="MeshInstance3D" parent="Head2"]
+[node name="Ear2" type="MeshInstance3D" parent="MeshInstance3D/Head2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.149647, 0.23261, 0.256)
 mesh = SubResource("PrismMesh_ibwx8")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="Tail" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.603904, -0.797057, 0, 0.797057, -0.603904, -2.98023e-07, -0.058082, 1.16883)
+[node name="Tail" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -0.797057, 0.603904, 0, -0.603904, -0.797057, -2.98023e-07, -1.16883, -0.0961996)
 mesh = SubResource("BoxMesh_85dmk")
+skeleton = NodePath("../..")
 
 [node name="Legs" type="Node3D" parent="."]
 

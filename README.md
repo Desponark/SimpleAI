@@ -17,63 +17,27 @@ https://github.com/user-attachments/assets/d5207230-0b06-4def-a218-edbc1f636b5d
 
 [Better Quality Link](https://drive.google.com/file/d/1JAko0W-VNtZXy5gSlPrsZiTP0O_p7gT6/view?usp=drive_link)
 
-# Project Summary
+# Basic Framework
 
-## Topic
-“How to create a believable agent behaviour system for an action game by applying simple solutions in Godot?”
-  
-- Steering Behaviours + FSM
-  - Believable AI behaviour system for Action-RPG (Outward, Soulslike)
-- Focus steering and behaviour, not locomotion or combat
-  - “where” and “why” not “how”
-- Simple as possible
+## Steering Behaviour
+Simplified, an autonomous agent consists of three parts. The “why”, the “where” and the “how”. Why do this action? Where do I go? How do I move? I like to think of these parts as the brain that decides what to do **(Action Selection)**, an internal compass that tells it where to go **(Steering)** and the legs that execute the movement **(Locomotion)**.
 
-## Result
+- Action Selection => Implemented via [Cognition class](https://github.com/Desponark/SimpleAI/blob/main/Nodes/Cognition.cs)
+- Steering => Implemented via [Steering class](https://github.com/Desponark/SimpleAI/blob/main/Nodes/Steering.cs)
+- Locomotion => Implemented via [Vehicle class](https://github.com/Desponark/SimpleAI/blob/main/Nodes/Vehicle.cs)
 
-### Framing Conditions
-- Time limit of 2 months
-- Godot v4.1-stable.mono
 
-### Steering Behaviours
-- Steering
-  - Collection of SteeringBehaviour
-    - SteeringBehaviour
-      - Weight, Active, “Vector3 Calculate()”
-      - Individually calculated
-    - Summed up
-  - Returned as weighted truncated running sum with prioritization
-- Vehicle
-  - Add steering force every update
+## Finite-State Machine
+I have decided to go with a variant that embeds the rules for state transitions within the states themselves also known as a state design pattern.  
 
-### Finite-State Machine
-- State Design Pattern
-	- Embedded rules for transitions in states
-- State (abstract, generic, singleton)
-	- Enter, Exit
-	- Execute
-		- Returns new state
-- State Machine
-	- Current State, Previous State
-	- ChangeState
-	- Global State
-		- For repeating code
+First there is the [State class](https://github.com/Desponark/SimpleAI/blob/main/CustomTypes/AI/State.cs) which is generic for flexibility and serves as the parent for all other states. Note that the Execute method is the only one that returns something because it is used to switch states.  
 
-### Agents
-- Bandit
-	- follow path -> chase -> orbit -> attack
-- Deer
-	- wander -> watch -> flee
-- Wolf
-	- wander -> watch -> chase -> attack -> flee
-- Bandit Leader
-	- follow path -> command follow
+Next up is the [StateMachine class](https://github.com/Desponark/SimpleAI/blob/main/CustomTypes/AI/StateMachine.cs) which essentially works by calling the Execute() method of the State class on every Update().  
+The globalState is used for having a simple way of implementing things that always apply to the agent regardless of which state they are actually in. Like a hunger meter decreasing over time.
 
-### Assembling an Agent
-- Vehicle
-	- Mesh
-	- Cognition
-		- State Machine
-		- Memory
-	- GameplayStats
-	- Steering
-	- Perception
+# Implementation
+
+## CustomTypes
+## Nodes
+## Resources(Godot)
+## Singletons

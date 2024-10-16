@@ -18,6 +18,7 @@ https://github.com/user-attachments/assets/d5207230-0b06-4def-a218-edbc1f636b5d
 [Better Quality Link](https://drive.google.com/file/d/1JAko0W-VNtZXy5gSlPrsZiTP0O_p7gT6/view?usp=drive_link)
 
 # Basic Framework
+This explains the basic framework for the project.  
 
 ## Steering Behaviour
 Simplified, an autonomous agent consists of three parts. The “why”, the “where” and the “how”. Why do this action? Where do I go? How do I move? I like to think of these parts as the brain that decides what to do **(Action Selection)**, an internal compass that tells it where to go **(Steering)** and the legs that execute the movement **(Locomotion)**.
@@ -36,8 +37,35 @@ Next up is the [StateMachine class](https://github.com/Desponark/SimpleAI/blob/m
 The globalState is used for having a simple way of implementing things that always apply to the agent regardless of which state they are actually in. Like a hunger meter decreasing over time.
 
 # Implementation
+Here I'll try to explain each component/class shortly. It roughly follows the structure of the project.
 
 ## CustomTypes
+- Steering Behaviours
+ - Approach
+ - FollowPath
+ - Orbit
+ - WallAvoidance
+- DebugDrawer
 ## Nodes
+- Cognition
+ - Memory
+ - Threat Evaluation
+- Commanding
+- GameplayStats
+- Perception
+- PlayerCamera
+- PlayerInput
+- Steering
+- Vehicle
 ## Resources(Godot)
+- InitialState
+## Agents (Scenes)
+- Bandit
+- Deer
+- Wolf
+- Player
+- BanditLeader
 ## Singletons
+- AIState_Empty
+- AIState_BanditPatrolling
+- AIState_Bandit_Global

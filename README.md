@@ -92,5 +92,5 @@ The idea of this class is for leaders to offer commands to followers and also me
   - This state serves as a blank placeholder for when an InitialState is created and there are no states that can be returned yet or there is no need for a global state like in case of the Player.
 - AIState_BanditPatrolling
   - The patrolling state is responsible for letting the bandit follow a given path and is also its initial state. Most other agents instead don’t follow a path but wander randomly.
-  - AIState_Bandit_Global
-    - To reiterate shortly, the global state is for having a simple way of implementing logic that always executes regardless of the current state the agent is in.
+- AIState_Bandit_Global
+  - To reiterate shortly, the global state is for having a simple way of implementing logic that always executes regardless of the current state the agent is in.
